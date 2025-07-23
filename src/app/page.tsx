@@ -1,7 +1,6 @@
 "use client"
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 import {useState} from "react";
-import { addStyles, EditableMathField } from 'react-mathquill'
 import {derivative, evaluate} from "mathjs";
 import dynamic from "next/dynamic";
 
