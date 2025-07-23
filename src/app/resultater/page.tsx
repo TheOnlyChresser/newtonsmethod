@@ -1,9 +1,14 @@
 "use client"
 
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 export default function Index() {
-    useEffect(() => {const result = JSON.parse(localStorage.getItem("newtonResult") || "null");}, []);
+    const [result, setResult] = useState<number | null>(null);
+
+    useEffect(() => {
+        const storedResult = JSON.parse(localStorage.getItem("newtonResult") || "null");
+        setResult(storedResult);
+    }, []);
     return (
         <>
         <main className="bg-blue-50 w-full min-h-screen flex justify-center items-center">
