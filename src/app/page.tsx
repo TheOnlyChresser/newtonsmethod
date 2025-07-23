@@ -13,24 +13,25 @@ const EditableMathField = dynamic(
     { ssr: false }
 );
 
-function calculate(expression: string, x: number): number {
+function calculate(expression : string, x: number): number {
     return evaluate(expression, {x})
 }
-function differentiate(expression:string): string {
+function differentiate(expression:string) : string {
     return derivative(expression, "x").toString();
 }
 
-function newtonsmethod(expression: string): number {
+function newtonsmethod(expression: string): string {
     let x = 100
+    const derivativeexpression = differentiate(expression)
     for (let i = 0; i < 1000; i++) {
         const notderivative = calculate(expression, x)
-        const derivative = calculate(differentiate(expression), x)
+        const derivative = calculate(derivativeexpression, x)
         if (Math.abs(notderivative) < 0.000000000001) {
             break
         }
         x = x - notderivative/derivative
     }
-    return x
+    return x.toFixed(3)
 }
 
 export default function Index() {
@@ -50,13 +51,14 @@ export default function Index() {
                             }}
                         /></div></MathJax>
                     </div>
-                    <div className="border-2 group hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-10 w-full rounded-3xl">
-                        <a href="/resultater">
-                        <button className="font-bold text-black/85 text-2xl group-hover:text-blue-50"   onClick={() => {
+                    <a href="/resultater">
+                        <button className="border-2 hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-10 w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50"   onClick={() => {
                             const result = newtonsmethod(latex);
                             localStorage.setItem("newtonResult", JSON.stringify(result));
-                        }}>Udregn</button></a>
-                    </div>
+                        }}>
+                            Udregn
+                        </button>
+                    </a>
                 </div>
             </main>
             <footer className="bg-black/30 flex justify-center items-center w-full h-28">
