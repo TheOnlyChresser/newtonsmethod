@@ -52,7 +52,7 @@ export default function Index() {
                         /></div></MathJax>
                     </div>
                     <a href="/resultater">
-                        <button className="border-2 hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-10 w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50"   onClick={() => {
+                        <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-10 w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50"   onClick={() => {
                             const result = newtonsmethod(latex);
                             localStorage.setItem("newtonResult", JSON.stringify(result));
                         }}>
