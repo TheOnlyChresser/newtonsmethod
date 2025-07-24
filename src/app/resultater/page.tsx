@@ -1,6 +1,7 @@
 "use client"
 
 import {useEffect, useState} from "react";
+import Link from "next/link";
 
 export default function Index() {
     const [result, setResult] = useState<number | null>(null);
@@ -17,11 +18,11 @@ export default function Index() {
                     Nulpunktet ligger ved
                 </h1>
                 <h2 className="text-3xl mt-5 text-black/85 text-center">{result}</h2>
-                <a href="/" className="mt-10">
+                <Link href="/" className="mt-10">
                     <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-10 w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50">
                         Start forfra
                     </button>
-                </a>
+                </Link>
             </div>
         </main>
         <footer className="bg-black/30 flex justify-center items-center w-full h-[15vh]">
