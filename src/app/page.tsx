@@ -13,19 +13,19 @@ const EditableMathField = dynamic(
     { ssr: false }
 );
 
-function calculate(expression : string, x: number): number {
-    return evaluate(expression, {x})
+function calculate(expression : string, variable: string, x: number): number {
+    return evaluate(expression, {[variable]: x})
 }
-function differentiate(expression:string) : string {
-    return derivative(expression, "x").toString();
+function differentiate(expression:string, variable: string) : string {
+    return derivative(expression, variable).toString();
 }
 
-function newtonsmethod(expression: string): number {
+function newtonsmethod(expression: string, variable: string): number {
     let x = 100
-    const derivativeexpression = differentiate(expression)
+    const derivativeexpression = differentiate(expression, variable)
     for (let i = 0; i < 1000; i++) {
-        const notderivative = calculate(expression, x)
-        const derivative = calculate(derivativeexpression, x)
+        const notderivative = calculate(expression, variable, x)
+        const derivative = calculate(derivativeexpression, variable, x)
         if (Math.abs(notderivative) < 0.000000000001) {
             break
         }
@@ -39,6 +39,7 @@ function newtonsmethod(expression: string): number {
 
 export default function Index() {
     const [latex, setLatex] = useState('')
+    const [x, setX] = useState('x')
     return (
         <MathJaxContext>
             <main className="bg-blue-50 w-full min-h-[85vh] flex justify-center items-center">
@@ -47,16 +48,21 @@ export default function Index() {
                         Hvilken funktion ville du finde nulpunktet for?
                     </h1>
                     <div className="flex flex-row mb-5">
-                        <MathJax className="text-2xl">{"\\(f(x) =\\)"}<div className="ml-2 mb-5 inline"><EditableMathField
+                        <MathJax className="text-2xl">{"\\(f(\\)"}</MathJax><div className="text-2xl inline"><EditableMathField
+                            latex={x}
+                            onChange={(mathField) => {
+                                setX(mathField.latex())
+                            }}
+                        /></div><MathJax className="text-2xl">{"\\() =\\)"}</MathJax><div className="text-2xl ml-2 mb-5 inline"><EditableMathField
                             latex={latex}
                             onChange={(mathField) => {
                                 setLatex(mathField.latex())
                             }}
-                        /></div></MathJax>
+                        /></div>
                     </div>
                     <a href="/resultater">
                         <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-10 w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50"   onClick={() => {
-                            const result = newtonsmethod(latex);
+                            const result = newtonsmethod(latex, x);
                             localStorage.setItem("newtonResult", JSON.stringify(result));
                         }}>
                             Udregn
