@@ -26,7 +26,7 @@ export default function Index() {
         </main>
         <footer className="bg-black/30 flex justify-center items-center w-full h-[15vh]">
             <div>
-                <h2 className="text-white font-semibold text-xl">Made by <a href="https://www.chrestensoelberg.dk/" className="text-blue-200 hover:underline decoration-blue-200">Chresten</a> with care ❤️</h2>
+                <h2 className="text-white font-semibold text-xl">Lavet af <a href="https://www.chrestensoelberg.dk/" className="text-blue-200 hover:underline decoration-blue-200">Chresten</a> med kærlighed ❤️</h2>
             </div>
         </footer>
         </>
