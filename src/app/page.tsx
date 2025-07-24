@@ -20,7 +20,7 @@ function differentiate(expression:string) : string {
     return derivative(expression, "x").toString();
 }
 
-function newtonsmethod(expression: string): string {
+function newtonsmethod(expression: string): number {
     let x = 100
     const derivativeexpression = differentiate(expression)
     for (let i = 0; i < 1000; i++) {
@@ -31,7 +31,10 @@ function newtonsmethod(expression: string): string {
         }
         x = x - notderivative/derivative
     }
-    return x.toFixed(3)
+    if(parseFloat(x.toFixed(3)) === Math.round(x)) {
+        return Math.round(x);
+    }
+    else return parseFloat(x.toFixed(3));
 }
 
 export default function Index() {
