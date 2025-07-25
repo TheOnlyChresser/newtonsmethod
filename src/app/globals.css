@@ -50,6 +50,7 @@ body {
 .mq-math-mode .mq-editable-field {
   padding-left: 5px;
   padding-right: 5px;
+  background-color: transparent;
 }
 .mq-editable-field.mq-focused,
 .mq-math-mode .mq-editable-field.mq-focused {

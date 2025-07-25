@@ -45,8 +45,14 @@ function functionarray(result: [number, number[]], expression: string | null, va
     const pointarray = [];
     if (typeof expression === "string" && typeof variable === "string" ) {
         for (let i = result[0]-10; i < result[0]+10; i+=0.1) {
-            xarray.push(i)
-            yarray.push(evaluate(expression, {[variable]: i}))
+            if(parseFloat((i).toFixed(3)) === Math.round(i)) {
+                xarray.push(Math.round(i))
+            }
+            else xarray.push(parseFloat(i.toFixed(3)));
+            if(parseFloat(i.toFixed(3)) === Math.round(i)) {
+                yarray.push(Math.round(i))
+            }
+            else yarray.push(parseFloat(i.toFixed(3)));
         }
         for (let i = result[0]-9.9; i < result[0]; i+=0.1) {
             pointarray.push(null)
