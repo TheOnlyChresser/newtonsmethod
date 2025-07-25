@@ -66,7 +66,7 @@ export default function Index() {
     return (
         <MathJaxContext>
             <main className="bg-blue-50 w-full min-h-[100vh] flex justify-center items-center">
-                <div className="mx-5 mb-12 flex flex-col justify-between p-10 bg-white/25 backdrop-blur-3xl shadow-md w-150 h-100 border-1 border-black rounded-3xl">
+                <div className="mx-5 mb-12 flex flex-col justify-between p-10 bg-white/25 backdrop-blur-3xl shadow-md w-[100vw] md:w-[80vw] lg:w-[50vw] h-[60vh] border-1 border-black rounded-3xl">
                     <h1 className="text-4xl font-semibold text-black/85">
                         Hvilken funktion ville du finde nulpunktet for?
                     </h1>
@@ -92,7 +92,7 @@ export default function Index() {
                         />
                     </div>
                     </div>
-                        <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-10 w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50"   onClick={() => {
+                        <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-[6vh] w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50"   onClick={() => {
                             if (Math.round(calculate(latex, x, newtonsmethod(latex, x)[0])) === 0) {
                                 const result = newtonsmethod(latex, x);
                                 localStorage.setItem("newtonResult", JSON.stringify(result));
