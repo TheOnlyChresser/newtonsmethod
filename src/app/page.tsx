@@ -3,7 +3,7 @@ import { MathJax, MathJaxContext } from "better-react-mathjax";
 import {useState} from "react";
 import {derivative, evaluate} from "mathjs";
 import dynamic from "next/dynamic";
-import {router} from "next/client";
+import {router} from "next/navigation";
 
 const EditableMathField = dynamic(
     () =>
