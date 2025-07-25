@@ -3,6 +3,7 @@ import { MathJax, MathJaxContext } from "better-react-mathjax";
 import {useState} from "react";
 import {derivative, evaluate} from "mathjs";
 import dynamic from "next/dynamic";
+import {router} from "next/client";
 
 const EditableMathField = dynamic(
     () =>
@@ -89,7 +90,7 @@ export default function Index() {
                                 localStorage.setItem("xarray", JSON.stringify(functionarray(result, latex, x)[0]))
                                 localStorage.setItem("yarray", JSON.stringify(functionarray(result, latex, x)[1]))
                                 localStorage.setItem("pointarray", JSON.stringify(functionarray(result, latex, x)[2]))
-                                window.location.href="/resultater"
+                                router.push("/resultater")
                             } else {
                                 alert("Ugyldig funktion.")
                             }
