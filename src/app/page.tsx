@@ -1,6 +1,6 @@
 "use client"
 import { MathJax, MathJaxContext } from "better-react-mathjax";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {derivative, evaluate} from "mathjs";
 import dynamic from "next/dynamic";
 
@@ -53,8 +53,6 @@ function functionarray(result: [number, number[]], expression: string | null, va
         }
         pointarray.push(0)
     }
-    console.log(pointarray);
-    console.log(xarray);
     return (
         [xarray, yarray, pointarray]
     )
