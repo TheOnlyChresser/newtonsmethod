@@ -85,6 +85,7 @@ export default function Index() {
                             if (Math.round(calculate(latex, x, newtonsmethod(latex, x)[0])) === 0) {
                                 const result = newtonsmethod(latex, x);
                                 localStorage.setItem("newtonResult", JSON.stringify(result));
+                                localStorage.setItem("newtonVariable", JSON.stringify(x));
                                 localStorage.setItem("xarray", JSON.stringify(functionarray(result, latex, x)[0]))
                                 localStorage.setItem("yarray", JSON.stringify(functionarray(result, latex, x)[1]))
                                 localStorage.setItem("pointarray", JSON.stringify(functionarray(result, latex, x)[2]))

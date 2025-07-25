@@ -24,36 +24,33 @@ export default function Index() {
         setYarray(storedYarray);
         const storedPointarray = JSON.parse(localStorage.getItem("pointarray") || "null");
         setPointarray(storedPointarray);
-        console.log(pointarray);
     }, []);
     return (
         <>
         <main className="bg-blue-50 w-full min-h-[100vh] flex justify-center items-center">
+            {loading ? (
             <div className="mx-5 flex flex-col p-10 bg-white/25 backdrop-blur-3xl shadow-md w-150 border-1 border-black rounded-3xl">
                 <h1 className="text-4xl font-semibold text-black/85 text-center">
                     Nulpunktet ligger ved
                 </h1>
-                {loading ? (
-                    <>
-                    <h2 className="text-3xl mt-1 mb-4 text-black/85 text-center">{result[0]}</h2>
-                        <LineChart
-                            xAxis={[{label: variable, data: xarray}]}
-                            yAxis={[{label: "y"}]}
-                            series={[{label: "Funktion", data: yarray, showMark: false },
-                                {label: "Nulpunkt", data: pointarray }]}
-                            height={300}
-                            grid={{ vertical: true, horizontal: true }}
-                        />
-                    </>
-                ): (
-                    <h2 className="mt-5 2xl font-semibold text-center">Indlæser data...</h2>
-                )}
+                <h2 className="text-3xl mt-1 mb-4 text-black/85 text-center">{result[0]}</h2>
+                <LineChart
+                    xAxis={[{label: variable, data: xarray}]}
+                    yAxis={[{label: "y"}]}
+                    series={[{label: "Funktion", data: yarray, showMark: false },
+                        {label: "Nulpunkt", data: pointarray }]}
+                    height={300}
+                    grid={{ vertical: true, horizontal: true }}
+                />
                 <Link href="/" className="mt-10">
                     <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-10 w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50">
                         Start forfra
                     </button>
                 </Link>
             </div>
+            ): (
+                <h1 className="flex justify-center items-center text-5xl font-semibold text-center">Indlæser data...</h1>
+            )}
         </main>
         <footer className="bg-black/30 flex justify-center items-center w-full h-[15vh]">
             <div>
