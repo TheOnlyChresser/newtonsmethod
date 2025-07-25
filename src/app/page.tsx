@@ -1,6 +1,6 @@
 "use client"
 import { MathJax, MathJaxContext } from "better-react-mathjax";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {derivative, evaluate} from "mathjs";
 import dynamic from "next/dynamic";
 
@@ -20,10 +20,12 @@ function differentiate(expression:string, variable: string) : string {
     return derivative(expression, variable).toString();
 }
 
-function newtonsmethod(expression: string, variable: string): number {
+function newtonsmethod(expression: string, variable: string): [number, number[]] {
     let x = 100
+    const xarray: number[] = [];
     const derivativeexpression = differentiate(expression, variable)
     for (let i = 0; i < 1000; i++) {
+        xarray.push(x);
         const notderivative = calculate(expression, variable, x)
         const derivative = calculate(derivativeexpression, variable, x)
         if (Math.abs(notderivative) < 0.000000000001) {
@@ -32,17 +34,44 @@ function newtonsmethod(expression: string, variable: string): number {
         x = x - notderivative/derivative
     }
     if(parseFloat(x.toFixed(3)) === Math.round(x)) {
-        return Math.round(x);
+        return [Math.round(x), xarray];
     }
-    else return parseFloat(x.toFixed(3));
+    else return [parseFloat(x.toFixed(3)), xarray];
+}
+
+function functionarray(result: [number, number[]], expression: string | null, variable: string | null) {
+    const xarray = [];
+    const yarray = [];
+    const pointarray = [];
+    if (typeof expression === "string" && typeof variable === "string" ) {
+        for (let i = result[0]-10; i < result[0]+10; i+=1) {
+            xarray.push(i)
+            yarray.push(evaluate(expression, {[variable]: i}))
+        }
+        for (let i = result[0]-10; i < result[0]; i+=1) {
+            pointarray.push(null)
+        }
+        pointarray.push(0)
+    }
+    console.log(pointarray);
+    console.log(xarray);
+    return (
+        [xarray, yarray, pointarray]
+    )
 }
 
 export default function Index() {
     const [latex, setLatex] = useState('')
     const [x, setX] = useState('x')
+    const [newtonapplication, setNewtonapplication] = useState(false)
+    useEffect(() => {
+        if (Math.round(calculate(latex, x, newtonsmethod(latex, x)[0])) === 0) {
+            setNewtonapplication(true)
+        }
+    })
     return (
         <MathJaxContext>
-            <main className="bg-blue-50 w-full min-h-[85vh] flex justify-center items-center">
+            <main className="bg-blue-50 w-full min-h-[100vh] flex justify-center items-center">
                 <div className="mx-5 mb-12 flex flex-col justify-between p-10 bg-white/25 backdrop-blur-3xl shadow-md w-150 h-100 border-1 border-black rounded-3xl">
                     <h1 className="text-4xl font-semibold text-black/85">
                         Hvilken funktion ville du finde nulpunktet for?
@@ -60,14 +89,22 @@ export default function Index() {
                             }}
                         /></div>
                     </div>
+                    { newtonapplication ? (
                     <a href="/resultater">
                         <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-10 w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50"   onClick={() => {
                             const result = newtonsmethod(latex, x);
                             localStorage.setItem("newtonResult", JSON.stringify(result));
+                            localStorage.setItem("xarray", JSON.stringify(functionarray(result, latex, x)[0]))
+                            localStorage.setItem("yarray", JSON.stringify(functionarray(result, latex, x)[1]))
+                            localStorage.setItem("pointarray", JSON.stringify(functionarray(result, latex, x)[2]))
+
                         }}>
                             Udregn
                         </button>
-                    </a>
+                    </a>) : (
+                        <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-10 w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50"   onClick={() => {
+                            alert("Ugyldig funktion.")}}>Udregn</button>
+                    )}
                 </div>
             </main>
             <footer className="bg-black/30 flex justify-center items-center w-full h-[15vh]">
