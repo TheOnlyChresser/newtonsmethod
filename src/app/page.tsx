@@ -8,7 +8,6 @@ import {useRouter} from "next/navigation";
 const EditableMathField = dynamic(
     () =>
         import("react-mathquill").then((mod) => {
-            mod.addStyles();
             return mod.EditableMathField;
         }),
     { ssr: false }
@@ -62,6 +61,7 @@ function functionarray(result: [number, number[]], expression: string | null, va
 export default function Index() {
     const [latex, setLatex] = useState('')
     const [x, setX] = useState('x')
+    const [focus, setFocus] = useState()
     const router = useRouter()
     return (
         <MathJaxContext>
@@ -76,12 +76,21 @@ export default function Index() {
                             onChange={(mathField) => {
                                 setX(mathField.latex())
                             }}
-                        /></div><MathJax className="text-2xl">{"\\() =\\)"}</MathJax><div className="text-2xl ml-2 mb-5 inline"><EditableMathField
+                        /></div><MathJax className="text-2xl">{"\\() =\\)"}</MathJax><div className="relative text-2xl ml-2 mb-5 inline-block w-72">
+                        {(!focus && latex.trim() === "") && (
+                            <div className="absolute top-1/2 transform -translate-y-1/2 text-black/75 pointer-events-none select-none">
+                                ...
+                            </div>
+                        )}
+                        <EditableMathField
                             latex={latex}
                             onChange={(mathField) => {
                                 setLatex(mathField.latex())
                             }}
-                        /></div>
+                            onFocus={() => setFocus(true)}
+                            onBlur={() => setFocus(false)}
+                        />
+                    </div>
                     </div>
                         <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-10 w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50"   onClick={() => {
                             if (Math.round(calculate(latex, x, newtonsmethod(latex, x)[0])) === 0) {
