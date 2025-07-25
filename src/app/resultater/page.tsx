@@ -40,6 +40,7 @@ export default function Index() {
                     series={[{label: "Funktion", data: yarray, showMark: false },
                         {label: "Nulpunkt", data: pointarray }]}
                     height={300}
+                    width={300}
                     grid={{ vertical: true, horizontal: true }}
                 />
                 <Link href="/" className="md:mt-10">
