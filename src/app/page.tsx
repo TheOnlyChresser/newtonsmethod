@@ -44,11 +44,11 @@ function functionarray(result: [number, number[]], expression: string | null, va
     const yarray = [];
     const pointarray = [];
     if (typeof expression === "string" && typeof variable === "string" ) {
-        for (let i = result[0]-50; i < result[0]+50; i++) {
+        for (let i = result[0]-10; i < result[0]+10; i+=0.01) {
             xarray.push(i)
             yarray.push(evaluate(expression, {[variable]: i}))
         }
-        for (let i = result[0]-50; i < result[0]; i+=1) {
+        for (let i = result[0]-10; i < result[0]; i+=0.01) {
             pointarray.push(null)
         }
         pointarray.push(0)

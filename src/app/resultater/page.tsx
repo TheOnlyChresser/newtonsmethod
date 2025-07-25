@@ -35,8 +35,8 @@ export default function Index() {
                 </h1>
                 <h2 className="hidden md:block md:text-3xl md:mt-1 md:mb-4 md:text-black/85 md:text-center">{result[0]}</h2>
                 <LineChart
-                    xAxis={[{label: variable, data: xarray}]}
-                    yAxis={[{label: "y", min: -50, max: 50}]}
+                    xAxis={[{label: variable, data: xarray, min: result[0]-5, max: result[0]+5}]}
+                    yAxis={[{label: "y", min: result[0]-10, max: result[0]+10}]}
                     series={[{label: "Funktion", data: yarray, showMark: false },
                         {label: "Nulpunkt", data: pointarray }]}
                     height={300}
