@@ -48,7 +48,7 @@ function functionarray(result: [number, number[]], expression: string | null, va
             xarray.push(i)
             yarray.push(evaluate(expression, {[variable]: i}))
         }
-        for (let i = result[0]-10; i < result[0]; i+=0.1) {
+        for (let i = result[0]-9.9; i < result[0]; i+=0.1) {
             pointarray.push(null)
         }
         pointarray.push(0)
