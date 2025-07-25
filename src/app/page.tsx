@@ -78,7 +78,7 @@ export default function Index() {
                             }}
                         /></div><MathJax className="text-2xl">{"\\() =\\)"}</MathJax><div className="relative text-2xl ml-2 mb-5 inline-block w-72">
                         {(!focus && latex.trim() === "") && (
-                            <div className="absolute top-1/2 transform -translate-y-1/2 text-black/75 pointer-events-none select-none">
+                            <div className="tracking-[0.1em] absolute top-1/2 transform -translate-y-1/2 text-black/75 pointer-events-none select-none">
                                 ...
                             </div>
                         )}
