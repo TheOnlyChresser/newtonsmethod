@@ -29,21 +29,21 @@ export default function Index() {
         <>
         <main className="bg-blue-50 w-full min-h-[100vh] flex justify-center items-center">
             {loading ? (
-            <div className="mx-5 flex flex-col p-10 bg-white/25 backdrop-blur-3xl shadow-md w-150 border-1 border-black rounded-3xl">
-                <h1 className="text-4xl font-semibold text-black/85 text-center">
-                    Nulpunktet ligger ved
+            <div className="mx-5 flex flex-col p-10 bg-white/25 backdrop-blur-3xl shadow-md w-[100vw] md:w-[80vw] lg:w-[50vw] border-1 border-black rounded-3xl">
+                <h1 className="text-4xl font-semibold text-black/85 text-center mb-2 md:mb-0">
+                    Nulpunktet ligger ved <span className="md:hidden text-3xl text-black/85 font-normal">{result[0]}</span>
                 </h1>
-                <h2 className="text-3xl mt-1 mb-4 text-black/85 text-center">{result[0]}</h2>
+                <h2 className="hidden md:block md:text-3xl md:mt-1 md:mb-4 md:text-black/85 md:text-center">{result[0]}</h2>
                 <LineChart
                     xAxis={[{label: variable, data: xarray}]}
-                    yAxis={[{label: "y"}]}
+                    yAxis={[{label: "y", min: -50, max: 50}]}
                     series={[{label: "Funktion", data: yarray, showMark: false },
                         {label: "Nulpunkt", data: pointarray }]}
                     height={300}
                     grid={{ vertical: true, horizontal: true }}
                 />
-                <Link href="/" className="mt-10">
-                    <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-10 w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50">
+                <Link href="/" className="md:mt-10">
+                    <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-[6vh] w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50">
                         Start forfra
                     </button>
                 </Link>
