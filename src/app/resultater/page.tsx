@@ -24,6 +24,7 @@ export default function Index() {
         setYarray(storedYarray);
         const storedPointarray = JSON.parse(localStorage.getItem("pointarray") || "null");
         setPointarray(storedPointarray);
+        console.log(pointarray);
     }, []);
     return (
         <>
