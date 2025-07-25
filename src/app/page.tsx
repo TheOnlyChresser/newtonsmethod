@@ -63,12 +63,6 @@ function functionarray(result: [number, number[]], expression: string | null, va
 export default function Index() {
     const [latex, setLatex] = useState('')
     const [x, setX] = useState('x')
-    const [newtonapplication, setNewtonapplication] = useState(false)
-    useEffect(() => {
-        if (Math.round(calculate(latex, x, newtonsmethod(latex, x)[0])) === 0) {
-            setNewtonapplication(true)
-        }
-    })
     return (
         <MathJaxContext>
             <main className="bg-blue-50 w-full min-h-[100vh] flex justify-center items-center">
@@ -89,22 +83,20 @@ export default function Index() {
                             }}
                         /></div>
                     </div>
-                    { newtonapplication ? (
-                    <a href="/resultater">
                         <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-10 w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50"   onClick={() => {
-                            const result = newtonsmethod(latex, x);
-                            localStorage.setItem("newtonResult", JSON.stringify(result));
-                            localStorage.setItem("xarray", JSON.stringify(functionarray(result, latex, x)[0]))
-                            localStorage.setItem("yarray", JSON.stringify(functionarray(result, latex, x)[1]))
-                            localStorage.setItem("pointarray", JSON.stringify(functionarray(result, latex, x)[2]))
-
+                            if (Math.round(calculate(latex, x, newtonsmethod(latex, x)[0])) === 0) {
+                                const result = newtonsmethod(latex, x);
+                                localStorage.setItem("newtonResult", JSON.stringify(result));
+                                localStorage.setItem("xarray", JSON.stringify(functionarray(result, latex, x)[0]))
+                                localStorage.setItem("yarray", JSON.stringify(functionarray(result, latex, x)[1]))
+                                localStorage.setItem("pointarray", JSON.stringify(functionarray(result, latex, x)[2]))
+                                window.location.href="/resultater"
+                            } else {
+                                alert("Ugyldig funktion.")
+                            }
                         }}>
                             Udregn
                         </button>
-                    </a>) : (
-                        <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-10 w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50"   onClick={() => {
-                            alert("Ugyldig funktion.")}}>Udregn</button>
-                    )}
                 </div>
             </main>
             <footer className="bg-black/30 flex justify-center items-center w-full h-[15vh]">
