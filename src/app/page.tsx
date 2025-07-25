@@ -3,7 +3,7 @@ import { MathJax, MathJaxContext } from "better-react-mathjax";
 import {useState} from "react";
 import {derivative, evaluate} from "mathjs";
 import dynamic from "next/dynamic";
-import {router} from "next/navigation";
+import {useRouter} from "next/navigation";
 
 const EditableMathField = dynamic(
     () =>
@@ -62,6 +62,7 @@ function functionarray(result: [number, number[]], expression: string | null, va
 export default function Index() {
     const [latex, setLatex] = useState('')
     const [x, setX] = useState('x')
+    const router = useRouter()
     return (
         <MathJaxContext>
             <main className="bg-blue-50 w-full min-h-[100vh] flex justify-center items-center">
