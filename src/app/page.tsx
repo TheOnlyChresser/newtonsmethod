@@ -61,7 +61,7 @@ function functionarray(result: [number, number[]], expression: string | null, va
 export default function Index() {
     const [latex, setLatex] = useState('')
     const [x, setX] = useState('x')
-    const [focus, setFocus] = useState()
+    const [focus, setFocus] = useState(false)
     const router = useRouter()
     return (
         <MathJaxContext>
