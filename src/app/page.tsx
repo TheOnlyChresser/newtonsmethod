@@ -73,7 +73,7 @@ export default function Index() {
                     <h1 className="text-4xl font-semibold text-black/85">
                         Hvilken funktion ville du finde nulpunktet for?
                     </h1>
-                    <div className="flex flex-row mb-5">
+                    <div className="flex flex-row mb-5 ml-10">
                         <MathJax className="text-2xl">{"\\(f(\\)"}</MathJax><div className="text-2xl inline -ml-[4px] -mr-[4px]"><EditableMathField
                             latex={x}
                             onChange={(mathField) => {
