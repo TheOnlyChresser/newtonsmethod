@@ -90,7 +90,7 @@ export default function Index() {
                         <h3 className="italic font-extralight text-black text-sm mt-6">IT</h3>
                         <h2 className="text-2xl mb-1">Beregningstid: {calculationtime} ms</h2>
                     </div>
-                    <div className="w-full flex justify-center items-center mt-16 lg:mt-6">
+                    <div className="w-full flex justify-center items-center mt-16">
                         <button className="border-2 border-black rounded-2xl text-3xl p-2 hover:bg-black hover:text-white" onClick={makepdf}>Download rapport</button>
                     </div>
 
