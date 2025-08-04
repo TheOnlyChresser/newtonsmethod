@@ -65,7 +65,7 @@ export default function Index() {
                         margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
                     />
                 </div>
-                <div className="lg:w-[50vw]">
+                <div className="lg:w-[50vw] lg:ml-6">
                     <h3 className="italic font-extralight text-black text-sm">Nulpunkt</h3>
                     <h2 className="text-2xl">Fundet nulpunkt: {result[0]}</h2>
                     <div className="mt-16">
