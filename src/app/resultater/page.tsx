@@ -46,7 +46,7 @@ export default function Index() {
     }, []);
     return (
         <MathJaxContext>
-            <main className="bg-blue-50 w-full min-h-[100vh] flex flex-col p-10 lg:px-50 lg:justify-center">
+            <main className="bg-blue-50 w-full min-h-[100vh] flex flex-col p-10 lg:px-40 lg:justify-center">
             {loading ? (
                 <>
             <MathJax className="text-4xl lg:-mt-12 mb-16 lg:mb-10 text-center lg:text-start">{`\\(f(${variable}) = ${expression}\\)`}</MathJax>
