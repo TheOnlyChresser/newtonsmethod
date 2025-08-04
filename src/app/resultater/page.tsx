@@ -65,6 +65,20 @@ export default function Index() {
                         margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
                     />
                 </div>
+                <div className="flex lg:hidden justify-center items-center mb-16">
+                    <LineChart
+                        xAxis={[{data: xarray, min: result[0]-1, max: result[0]+1, position: "none", stroke: "none", tickSize: 0, tickLabelStyle: {display: "none"}, hideTooltip: true}]}
+                        yAxis={[{min: result[0]-1, max: result[0]+1, position: "none", stroke: "none", tickSize: 0, tickLabelStyle: {display: "none"}, hideTooltip: true}]}
+                        series={[{data: yarray, showMark: false },
+                            {data: pointarray, showMark: false }]}
+                        height={250}
+                        width={250}
+                        slotProps={{ tooltip: { trigger: 'none' }}}
+                        disableLineItemHighlight={true}
+                        axisHighlight={{x: "none"}}
+                        margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+                    />
+                </div>
                 <div className="lg:w-[50vw] lg:ml-6">
                     <h3 className="italic font-extralight text-black text-sm">Nulpunkt</h3>
                     <h2 className="text-2xl">Fundet nulpunkt: {result[0]}</h2>
