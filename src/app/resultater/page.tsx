@@ -38,7 +38,7 @@ export default function Index() {
         setStartvalue(storedStartvalue);
         const storedTolerance = JSON.parse(localStorage.getItem("tolerance") || "null");
         setTolerance(storedTolerance);
-        const storedExpression = JSON.parse(localStorage.getItem("expression") || "null");
+        const storedExpression = JSON.parse(localStorage.getItem("expression") || "");
         setExpression(storedExpression);
         const storedCalculationtime = JSON.parse(localStorage.getItem("calculationtime") || "null");
         setCalculationtime(storedCalculationtime);
