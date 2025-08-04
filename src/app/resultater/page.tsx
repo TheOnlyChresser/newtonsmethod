@@ -53,8 +53,8 @@ export default function Index() {
             <div className="flex lg:justify-center lg:items-center w-full lg:flex-row flex-col">
                 <div className="hidden lg:flex w-[50vw]">
                     <LineChart
-                        xAxis={[{data: xarray, min: result[0]-10, max: result[0]+10, position: "none", stroke: "none", tickSize: 0, tickLabelStyle: {display: "none"}, hideTooltip: true}]}
-                        yAxis={[{min: result[0]-10, max: result[0]+10, position: "none", stroke: "none", tickSize: 0, tickLabelStyle: {display: "none"}, hideTooltip: true}]}
+                        xAxis={[{data: xarray, min: result[0]-1, max: result[0]+1, position: "none", stroke: "none", tickSize: 0, tickLabelStyle: {display: "none"}, hideTooltip: true}]}
+                        yAxis={[{min: result[0]-1, max: result[0]+1, position: "none", stroke: "none", tickSize: 0, tickLabelStyle: {display: "none"}, hideTooltip: true}]}
                         series={[{data: yarray, showMark: false },
                             {data: pointarray, showMark: false }]}
                         height={450}
