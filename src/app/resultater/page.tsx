@@ -13,12 +13,12 @@ export default function Index() {
     const [xarray, setXarray] = useState<number[] | null>(null);
     const [yarray, setYarray] = useState<number[] | null>(null);
     const [pointarray, setPointarray] = useState<number[] | null>(null);
-    const loading = result && variable && xarray?.length && yarray?.length && pointarray?.length;
     const [iterations, setIterations] = useState<number | null>(null);
     const [startvalue, setStartvalue] = useState<number | null>(null);
     const [tolerance, setTolerance] = useState<number | null>(null);
     const [expression, setExpression] = useState<string | null>(null);
     const [calculationtime, setCalculationtime] = useState<number | null>(null);
+    const loading = result && variable && iterations && startvalue && tolerance && expression && calculationtime && xarray?.length && yarray?.length && pointarray?.length;
 
 
     useEffect(() => {
