@@ -20,7 +20,8 @@ function differentiate(expression:string, variable: string) : string {
     return derivative(expression, variable).toString();
 }
 
-function newtonsmethod(expression: string, variable: string): [number, number[]] {
+function newtonsmethod(expression: string, variable: string): [number, number[], number] {
+    const start = Date.now();
     let x = 100
     const xarray: number[] = [];
     const derivativeexpression = differentiate(expression, variable)
@@ -33,10 +34,11 @@ function newtonsmethod(expression: string, variable: string): [number, number[]]
         }
         x = x - notderivative/derivative
     }
+    const end = Date.now();
     if(parseFloat(x.toFixed(3)) === Math.round(x)) {
-        return [Math.round(x), xarray];
+        return [Math.round(x), xarray, end-start];
     }
-    else return [parseFloat(x.toFixed(3)), xarray];
+    else return [parseFloat(x.toFixed(3)), xarray, end-start];
 }
 
 function functionarray(result: [number, number[]], expression: string | null, variable: string | null) {
@@ -97,12 +99,18 @@ export default function Index() {
                     </div>
                         <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-[6vh] w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50"   onClick={() => {
                             if (Math.round(calculate(latex, x, newtonsmethod(latex, x)[0])) === 0) {
-                                const result = newtonsmethod(latex, x);
+                                const [a, b] = newtonsmethod(latex, x);
+                                const result = [a, b];
                                 localStorage.setItem("newtonResult", JSON.stringify(result));
                                 localStorage.setItem("newtonVariable", JSON.stringify(x));
                                 localStorage.setItem("xarray", JSON.stringify(functionarray(result, latex, x)[0]))
                                 localStorage.setItem("yarray", JSON.stringify(functionarray(result, latex, x)[1]))
                                 localStorage.setItem("pointarray", JSON.stringify(functionarray(result, latex, x)[2]))
+                                localStorage.setItem("iterations", JSON.stringify(1000))
+                                localStorage.setItem("startvalue", JSON.stringify(100))
+                                localStorage.setItem("tolerance", JSON.stringify(0.000000000001))
+                                localStorage.setItem("expression", JSON.stringify(latex))
+                                localStorage.setItem("calculationtime", JSON.stringify(newtonsmethod(latex, x)[2]))
                                 router.push("/resultater")
                             } else {
                                 alert("Ugyldig funktion.")
