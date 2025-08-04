@@ -100,7 +100,7 @@ export default function Index() {
                         <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-[6vh] w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50"   onClick={() => {
                             if (Math.round(calculate(latex, x, newtonsmethod(latex, x)[0])) === 0) {
                                 const [a, b] = newtonsmethod(latex, x);
-                                const result = [a, b];
+                                const result: [number, number[]] = [a, b];
                                 localStorage.setItem("newtonResult", JSON.stringify(result));
                                 localStorage.setItem("newtonVariable", JSON.stringify(x));
                                 localStorage.setItem("xarray", JSON.stringify(functionarray(result, latex, x)[0]))
