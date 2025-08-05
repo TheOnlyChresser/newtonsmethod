@@ -48,10 +48,11 @@ export default function Index() {
         <MathJaxContext>
             <main className="bg-blue-50 w-full min-h-[100vh] flex flex-col p-10 lg:px-40 lg:justify-center">
             {loading ? (
-                <>
+                <div className="lg:p-20 lg:bg-white/25 lg:backdrop-blur-3xl lg:shadow-md lg:border-1 lg:border-black lg:rounded-3xl">
             <MathJax className="text-4xl lg:-mt-12 mb-16 lg:mb-10 text-center lg:text-start">{`\\(f(${variable}) = ${expression}\\)`}</MathJax>
             <div className="flex lg:justify-center lg:items-center w-full lg:flex-row flex-col">
                 <div className="hidden lg:flex w-[50vw]">
+                    <div className="p-2 border-2 rounded-md bg-blue-100/10 shadow-sm border-white">
                     <LineChart
                         xAxis={[{data: xarray, min: result[0]-1, max: result[0]+1, position: "none", stroke: "none", tickSize: 0, tickLabelStyle: {display: "none"}, hideTooltip: true}]}
                         yAxis={[{min: result[0]-1, max: result[0]+1, position: "none", stroke: "none", tickSize: 0, tickLabelStyle: {display: "none"}, hideTooltip: true}]}
@@ -64,6 +65,7 @@ export default function Index() {
                         axisHighlight={{x: "none"}}
                         margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
                     />
+                    </div>
                 </div>
                 <div className="flex lg:hidden justify-center items-center mb-16">
                     <LineChart
@@ -99,7 +101,7 @@ export default function Index() {
 
                 </div>
             </div>
-            </>
+            </div>
         ): (
                 <h1 className="flex justify-center items-center text-5xl font-semibold text-center">Indlæser data...</h1>
             )}
