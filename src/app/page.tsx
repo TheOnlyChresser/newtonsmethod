@@ -20,16 +20,16 @@ function differentiate(expression:string, variable: string) : string {
     return derivative(expression, variable).toString();
 }
 
-function newtonsmethod(expression: string, variable: string): [number, number[], number] {
+function newtonsmethod(expression: string, variable: string, startvalue: number = 100, iterations: number = 1000, tolerance: number = 0.000000000001): [number, number[], number] {
     const start = Date.now();
-    let x = 100
+    let x = startvalue
     const xarray: number[] = [];
     const derivativeexpression = differentiate(expression, variable)
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < iterations; i++) {
         xarray.push(x);
         const notderivative = calculate(expression, variable, x)
         const derivative = calculate(derivativeexpression, variable, x)
-        if (Math.abs(notderivative) < 0.000000000001) {
+        if (Math.abs(notderivative) < tolerance) {
             break
         }
         x = x - notderivative/derivative
@@ -67,11 +67,17 @@ export default function Index() {
     const [latex, setLatex] = useState('')
     const [x, setX] = useState('x')
     const [focus, setFocus] = useState(false)
+    const [step, setStep] = useState(0)
+    const [iterations, setIterations] = useState<string>("")
+    const [tolerance, setTolerance] = useState<string>("")
+    const [startvalue, setStartvalue] = useState<string>("")
     const router = useRouter()
     return (
         <MathJaxContext>
             <main className="bg-blue-50 w-full min-h-[100vh] flex justify-center items-center">
                 <div className="mx-5 mb-12 flex flex-col justify-between p-10 bg-white/25 backdrop-blur-3xl shadow-md w-[100vw] md:w-[80vw] lg:w-[50vw] h-[60vh] border-1 border-black rounded-3xl">
+                    {step===0 && (
+                        <>
                     <h1 className="text-4xl font-semibold text-black/85">
                         Hvilken funktion ville du finde nulpunktet for?
                     </h1>
@@ -97,27 +103,117 @@ export default function Index() {
                         />
                     </div>
                     </div>
-                        <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-[6vh] w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50"   onClick={() => {
-                            if (Math.round(calculate(latex, x, newtonsmethod(latex, x)[0])) === 0) {
-                                const [a, b] = newtonsmethod(latex, x);
-                                const result: [number, number[]] = [a, b];
-                                localStorage.setItem("newtonResult", JSON.stringify(result));
-                                localStorage.setItem("newtonVariable", JSON.stringify(x));
-                                localStorage.setItem("xarray", JSON.stringify(functionarray(result, latex, x)[0]))
-                                localStorage.setItem("yarray", JSON.stringify(functionarray(result, latex, x)[1]))
-                                localStorage.setItem("pointarray", JSON.stringify(functionarray(result, latex, x)[2]))
-                                localStorage.setItem("iterations", JSON.stringify(1000))
-                                localStorage.setItem("startvalue", JSON.stringify(100))
-                                localStorage.setItem("tolerance", JSON.stringify(0.000000000001))
-                                localStorage.setItem("expression", JSON.stringify(latex))
-                                localStorage.setItem("calculationtime", JSON.stringify(newtonsmethod(latex, x)[2]))
-                                router.push("/resultater")
-                            } else {
-                                alert("Ugyldig funktion.")
-                            }
-                        }}>
-                            Udregn
-                        </button>
+                            <div className="w-full flex justify-end">
+                                <button className="cursor-pointer text-black hover:text-red-500 flex items-center"   onClick={() => {
+                                    setStep(step+1)
+                                }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg>
+                                </button>
+                            </div>
+                        </>)}
+                    {step===1 && (
+                        <>
+                            <h1 className="text-4xl font-semibold text-black/85">
+                                Hvad skal startværdien være?
+                            </h1>
+                            <div className="flex flex-row mb-5 ml-10">
+                                <div className="relative text-2xl ml-2 mb-5 inline-block w-72">
+                                <input
+                                    placeholder="100"
+                                    value={startvalue}
+                                    className="focus:outline-0 text-3xl"
+                                    onChange={(e) => {
+                                        setStartvalue(e.target.value)
+                                    }}
+                                />
+                            </div>
+                            </div>
+                            <div className="w-full flex justify-between">
+                                <button className="cursor-pointer text-black hover:text-red-500 flex items-center"   onClick={() => {
+                                    setStep(step-1)
+                                }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#1f1f1f"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
+                                </button>
+                            <button className="cursor-pointer text-black hover:text-red-500 flex items-center"   onClick={() => {
+                                setStep(step+1)
+                            }}>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg>
+                            </button>
+                            </div>
+                        </>)}
+                    {step===2 && (
+                        <>
+                            <h1 className="text-4xl font-semibold text-black/85">
+                                Hvor mange iterationer skal der være?
+                            </h1>
+                            <div className="flex flex-row mb-5 ml-10">
+                                <div className="relative text-2xl ml-2 mb-5 inline-block w-72">
+                                    <input
+                                        placeholder="1000"
+                                        value={iterations}
+                                        className="focus:outline-0 text-3xl"
+                                        onChange={(e) => {
+                                            setIterations(e.target.value)
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="w-full flex justify-between">
+                                <button className="cursor-pointer text-black hover:text-red-500 flex items-center"   onClick={() => {
+                                    setStep(step-1)
+                                }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#1f1f1f"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
+                                </button>
+                                <button className="cursor-pointer text-black hover:text-red-500 flex items-center"   onClick={() => {
+                                    setStep(step+1)
+                                }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg>
+                                </button>
+                            </div>
+                        </>)}
+                    {step===3 && (
+                        <>
+                            <h1 className="text-4xl font-semibold text-black/85">
+                                Hvad skal tolerancen være?
+                            </h1>
+                            <div className="flex flex-row mb-5 ml-10">
+                                <div className="relative text-2xl ml-2 mb-5 inline-block w-72">
+                                    <input
+                                        placeholder="0.000000000001"
+                                        value={tolerance}
+                                        className="focus:outline-0 text-3xl"
+                                        onChange={(e) => {
+                                            setTolerance(e.target.value)
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-[6vh] w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50"   onClick={() => {
+                                const truestartvalue: number = Number(startvalue) || 100
+                                const trueiterations: number = Number(iterations) || 1000
+                                const truetolerance: number = Number(tolerance) || 0.000000000001
+                                if (Math.round(calculate(latex, x, newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[0])) === 0) {
+                                    const [a, b] = newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance);
+                                    const result: [number, number[]] = [a, b];
+                                    localStorage.setItem("newtonResult", JSON.stringify(result));
+                                    localStorage.setItem("newtonVariable", JSON.stringify(x));
+                                    localStorage.setItem("xarray", JSON.stringify(functionarray(result, latex, x)[0]))
+                                    localStorage.setItem("yarray", JSON.stringify(functionarray(result, latex, x)[1]))
+                                    localStorage.setItem("pointarray", JSON.stringify(functionarray(result, latex, x)[2]))
+                                    localStorage.setItem("iterations", JSON.stringify(trueiterations))
+                                    localStorage.setItem("startvalue", JSON.stringify(truestartvalue))
+                                    localStorage.setItem("tolerance", JSON.stringify(truetolerance))
+                                    localStorage.setItem("expression", JSON.stringify(latex))
+                                    localStorage.setItem("calculationtime", JSON.stringify(newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[2]))
+                                    router.push("/resultater")
+                                } else {
+                                    alert("Ugyldige parametre.")
+                                    setStep(0)
+                                }
+                            }}>
+                                Udregn
+                            </button>
+                        </>)}
                 </div>
             </main>
             <footer className="bg-black/30 flex justify-center items-center w-full h-[15vh]">
