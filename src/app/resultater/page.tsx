@@ -108,17 +108,15 @@ export default function Index() {
             <main className="bg-blue-50 w-full min-h-[100vh] flex flex-col p-10 lg:px-40 lg:justify-center">
             {loading ? (
                 <div>
-            <MathJax className="text-4xl lg:-mt-12 mb-16 lg:mb-10 text-center lg:text-start">{`\\(f(${variable}) = ${expression}\\)`}</MathJax>
+            <MathJax className="text-4xl mb-16 lg:text-[3vw] lg:-mt-[4vh] lg:mb-[4vh] text-center lg:text-start">{`\\(f(${variable}) = ${expression}\\)`}</MathJax>
             <div className="flex lg:justify-center lg:items-center w-full lg:flex-row flex-col">
                 <div className="hidden lg:flex w-[50vw]">
-                    <div className="p-2 border-2 rounded-md bg-blue-100/10 shadow-sm border-white">
+                    <div className="w-[36vw] h-[36vw] p-2 border-2 rounded-md bg-blue-100/10 shadow-sm border-white">
                     <LineChart
                         xAxis={[{data: xarray, min: result[0]-1, max: result[0]+1, position: "none", stroke: "none", tickSize: 0, tickLabelStyle: {display: "none"}, hideTooltip: true}]}
                         yAxis={[{min: result[0]-1, max: result[0]+1, position: "none", stroke: "none", tickSize: 0, tickLabelStyle: {display: "none"}, hideTooltip: true}]}
                         series={[{data: yarray, showMark: false },
                             {data: pointarray, showMark: false }]}
-                        height={450}
-                        width={450}
                         slotProps={{ tooltip: { trigger: 'none' }}}
                         disableLineItemHighlight={true}
                         axisHighlight={{x: "none"}}
@@ -140,22 +138,25 @@ export default function Index() {
                         margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
                     />
                 </div>
-                <div className="lg:w-[50vw] lg:ml-6">
-                    <h3 className="italic font-extralight text-black text-sm">Nulpunkt</h3>
-                    <h2 className="text-2xl">Fundet nulpunkt: {result[0]}</h2>
-                    <div className="mt-16">
-                        <h3 className="italic font-extralight text-black text-sm">Yderligere info</h3>
-                        <h2 className="text-2xl mb-1">Startværdi: {startvalue}</h2>
-                        <h2 className="text-2xl mb-1">Antal iterationer: {iterations}</h2>
-                        <h2 className="text-2xl mb-1">Tolerance: {tolerance}</h2>
-                        <h3 className="italic font-extralight text-black text-sm mt-6">IT</h3>
-                        <h2 className="text-2xl mb-1">Beregningstid: {calculationtime} ms</h2>
+                <div className="lg:w-[50vw] lg:ml-[2vw]">
+                    <h3 className="italic font-extralight text-black text-sm lg:text-[1vw]">Nulpunkt</h3>
+                    <h2 className="text-2xl lg:text-[2vw]">Fundet nulpunkt: {result[0]}</h2>
+                    <div className="mt-16 lg:mt-[6vh]">
+                        <h3 className="italic font-extralight text-black text-sm lg:text-[1vw]">Yderligere info</h3>
+                        <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">Startværdi: {startvalue}</h2>
+                        <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">Antal iterationer: {iterations}</h2>
+                        <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">Tolerance: {tolerance}</h2>
+                        <h3 className="italic font-extralight text-black text-sm mt-6 lg:text-[1vw] lg:mt-[6vh]">IT</h3>
+                        <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">Beregningstid: {calculationtime} ms</h2>
                     </div>
-                    <div className="w-full flex items-center mt-16">
-                        <Link href="/" className="text-black/50 hover:text-black mr-10">
+                    <div className="w-full flex items-center mt-16 lg:mt-[6vh]">
+                        <Link href="/" className="text-black/50 hover:text-black mr-10 lg:hidden">
                             <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="currentColor"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
                         </Link>
-                        <button className="border-2 border-black rounded-2xl text-3xl p-2 hover:bg-black hover:text-white" onClick={Makepdf}>Download rapport</button>
+                        <Link href="/" className="text-black/50 hover:text-black mr-[4vh] hidden lg:block">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="4vw" viewBox="0 -960 960 960" width="4vw" fill="currentColor"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
+                        </Link>
+                        <button className="border-2 border-black rounded-2xl text-3xl p-2 hover:bg-black hover:text-white lg:border-[0.15vw] lg:text-[2.4vw] lg:p-[0.5vw]" onClick={Makepdf}>Download rapport</button>
                     </div>
 
                 </div>
