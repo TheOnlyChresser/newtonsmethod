@@ -4,8 +4,67 @@ import {useEffect, useState} from "react";
 import Link from "next/link";
 import {LineChart} from "@mui/x-charts"
 import {MathJax, MathJaxContext} from "better-react-mathjax";
-function makepdf () {
-    alert("Under udvikling.")
+function Makepdf () {
+    const [result, setResult] = useState<[number, number[]] | null>(null);
+    const [variable, setVariable] = useState<string | null>(null);
+    const [xarray, setXarray] = useState<number[] | null>(null);
+    const [yarray, setYarray] = useState<number[] | null>(null);
+    const [pointarray, setPointarray] = useState<number[] | null>(null);
+    const [iterations, setIterations] = useState<number | null>(null);
+    const [startvalue, setStartvalue] = useState<number | null>(null);
+    const [tolerance, setTolerance] = useState<number | null>(null);
+    const [expression, setExpression] = useState<string | null>(null);
+    const [calculationtime, setCalculationtime] = useState<number | null>(null);
+    const loading = result && variable && iterations && startvalue && tolerance && expression && calculationtime && xarray?.length && yarray?.length && pointarray?.length;
+
+
+    useEffect(() => {
+        const storedResult = JSON.parse(localStorage.getItem("newtonResult") || "null");
+        setResult(storedResult);
+        const storedVariable = JSON.parse(localStorage.getItem("newtonVariable") || "null");
+        setVariable(storedVariable);
+        const storedXarray = JSON.parse(localStorage.getItem("xarray") || "null");
+        setXarray(storedXarray);
+        const storedYarray = JSON.parse(localStorage.getItem("yarray") || "null");
+        setYarray(storedYarray);
+        const storedPointarray = JSON.parse(localStorage.getItem("pointarray") || "null");
+        setPointarray(storedPointarray);
+        const storedIterations = JSON.parse(localStorage.getItem("iterations") || "null");
+        setIterations(storedIterations);
+        const storedStartvalue = JSON.parse(localStorage.getItem("startvalue") || "null");
+        setStartvalue(storedStartvalue);
+        const storedTolerance = JSON.parse(localStorage.getItem("tolerance") || "null");
+        setTolerance(storedTolerance);
+        const storedExpression = JSON.parse(localStorage.getItem("expression") || "null");
+        setExpression(storedExpression);
+        const storedCalculationtime = JSON.parse(localStorage.getItem("calculationtime") || "null");
+        setCalculationtime(storedCalculationtime);
+
+    }, []);
+    return (
+        <>
+        {loading ? (
+        <div className="mx-2">
+            <h1 className="text-center text-4xl">Newtons metode</h1>
+            <h2 className="font-thin text-md text-center">Genereret af newtonsmethod.vercel.app</h2>
+            <LineChart
+                xAxis={[{data: xarray, min: result[0]-1, max: result[0]+1, position: "none", stroke: "none", tickSize: 0, tickLabelStyle: {display: "none"}, hideTooltip: true}]}
+                yAxis={[{min: result[0]-1, max: result[0]+1, position: "none", stroke: "none", tickSize: 0, tickLabelStyle: {display: "none"}, hideTooltip: true}]}
+                series={[{data: yarray, showMark: false },
+                    {data: pointarray, showMark: false }]}
+                height={450}
+                width={450}
+                slotProps={{ tooltip: { trigger: 'none' }}}
+                disableLineItemHighlight={true}
+                axisHighlight={{x: "none"}}
+                margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+            />
+
+        </div>):  (
+            <></>
+            )}
+        </>
+    )
 }
 export default function Index() {
     const [result, setResult] = useState<[number, number[]] | null>(null);
@@ -48,7 +107,7 @@ export default function Index() {
         <MathJaxContext>
             <main className="bg-blue-50 w-full min-h-[100vh] flex flex-col p-10 lg:px-40 lg:justify-center">
             {loading ? (
-                <div className="lg:p-20 lg:bg-white/25 lg:backdrop-blur-3xl lg:shadow-md lg:border-1 lg:border-black lg:rounded-3xl">
+                <div>
             <MathJax className="text-4xl lg:-mt-12 mb-16 lg:mb-10 text-center lg:text-start">{`\\(f(${variable}) = ${expression}\\)`}</MathJax>
             <div className="flex lg:justify-center lg:items-center w-full lg:flex-row flex-col">
                 <div className="hidden lg:flex w-[50vw]">
@@ -96,7 +155,7 @@ export default function Index() {
                         <Link href="/" className="text-black/50 hover:text-black mr-10">
                             <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="currentColor"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
                         </Link>
-                        <button className="border-2 border-black rounded-2xl text-3xl p-2 hover:bg-black hover:text-white" onClick={makepdf}>Download rapport</button>
+                        <button className="border-2 border-black rounded-2xl text-3xl p-2 hover:bg-black hover:text-white" onClick={Makepdf}>Download rapport</button>
                     </div>
 
                 </div>
