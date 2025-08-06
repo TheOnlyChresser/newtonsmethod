@@ -101,7 +101,6 @@ export default function Index() {
         setExpression(storedExpression);
         const storedCalculationtime = JSON.parse(localStorage.getItem("calculationtime") || "null");
         setCalculationtime(storedCalculationtime);
-
     }, []);
     return (
         <MathJaxContext>
@@ -151,10 +150,10 @@ export default function Index() {
                     </div>
                     <div className="w-full flex items-center mt-16 lg:mt-[6vh]">
                         <Link href="/" className="text-black/50 hover:text-black mr-10 lg:hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="currentColor"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="currentColor"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
                         </Link>
                         <Link href="/" className="text-black/50 hover:text-black mr-[4vh] hidden lg:block">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="4vw" viewBox="0 -960 960 960" width="4vw" fill="currentColor"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="3vw" viewBox="0 -960 960 960" width="3vw" fill="currentColor"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
                         </Link>
                         <button className="border-2 border-black rounded-2xl text-3xl p-2 hover:bg-black hover:text-white lg:border-[0.15vw] lg:text-[2.4vw] lg:p-[0.5vw]" onClick={Makepdf}>Download rapport</button>
                     </div>

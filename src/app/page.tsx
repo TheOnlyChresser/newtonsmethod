@@ -1,6 +1,6 @@
 "use client"
 import { MathJax, MathJaxContext } from "better-react-mathjax";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {derivative, evaluate} from "mathjs";
 import dynamic from "next/dynamic";
 import {useRouter} from "next/navigation";
@@ -72,6 +72,32 @@ export default function Index() {
     const [tolerance, setTolerance] = useState<string>("")
     const [startvalue, setStartvalue] = useState<string>("")
     const router = useRouter()
+    function updateStep(step: number) {
+        setStep(Math.min(Math.max(step, 0), 3))
+    }
+    useEffect(() => {
+        const keyDownHandler = event => {
+
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                updateStep(step+1)
+            }
+            else if (event.key === "ArrowRight") {
+                event.preventDefault();
+                updateStep(step+1)
+            }
+            else if (event.key === "ArrowLeft") {
+                event.preventDefault();
+                updateStep(step-1)
+            }
+        };
+
+        document.addEventListener('keydown', keyDownHandler);
+
+        return () => {
+            document.removeEventListener('keydown', keyDownHandler);
+        };
+    })
     return (
         <MathJaxContext>
             <main className="bg-blue-50 w-full min-h-[100vh] flex justify-center items-center">
@@ -192,7 +218,7 @@ export default function Index() {
                                 const truestartvalue: number = Number(startvalue) || 100
                                 const trueiterations: number = Number(iterations) || 1000
                                 const truetolerance: number = Number(tolerance) || 0.000000000001
-                                if (Math.round(calculate(latex, x, newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[0])) === 0) {
+                                if (Math.abs(calculate(latex, x, newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[0])) < 5) {
                                     const [a, b] = newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance);
                                     const result: [number, number[]] = [a, b];
                                     localStorage.setItem("newtonResult", JSON.stringify(result));
@@ -209,6 +235,7 @@ export default function Index() {
                                 } else {
                                     alert("Ugyldige parametre.")
                                     setStep(0)
+                                    console.log(Math.abs(calculate(latex, x, newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[0])))
                                 }
                             }}>
                                 Udregn
