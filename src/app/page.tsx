@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {derivative, evaluate} from "mathjs";
 import dynamic from "next/dynamic";
 import {useRouter} from "next/navigation";
-
+// TODO: regex pattern til at lave latex om til plain text.
 const EditableMathField = dynamic(
     () =>
         import("react-mathquill").then((mod) => {
@@ -76,7 +76,7 @@ export default function Index() {
         setStep(Math.min(Math.max(step, 0), 3))
     }
     useEffect(() => {
-        const keyDownHandler = event => {
+        const keyDownHandler = (event: { key: string; preventDefault: () => void; }) => {
 
             if (event.key === 'Enter') {
                 event.preventDefault();
