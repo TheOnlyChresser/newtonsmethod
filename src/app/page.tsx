@@ -147,7 +147,7 @@ export default function Index() {
                                 <input
                                     placeholder="100"
                                     value={startvalue}
-                                    className="focus:outline-0 text-3xl"
+                                    className="focus:outline-0 text-3xl font-[350]"
                                     onChange={(e) => {
                                         setStartvalue(e.target.value)
                                     }}
@@ -177,7 +177,7 @@ export default function Index() {
                                     <input
                                         placeholder="1000"
                                         value={iterations}
-                                        className="focus:outline-0 text-3xl"
+                                        className="focus:outline-0 text-3xl font-[350]"
                                         onChange={(e) => {
                                             setIterations(e.target.value)
                                         }}
@@ -207,7 +207,7 @@ export default function Index() {
                                     <input
                                         placeholder="0.000000000001"
                                         value={tolerance}
-                                        className="focus:outline-0 text-3xl"
+                                        className="focus:outline-0 text-3xl font-[350]"
                                         onChange={(e) => {
                                             setTolerance(e.target.value)
                                         }}
