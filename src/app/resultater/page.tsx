@@ -171,6 +171,9 @@ export default function Index() {
 
                 </div>
             </div>
+                    <div className="mt-10">
+                        <p><span className="mb-3 ml-2 font-thin">*</span>Baseret på sammenligning med bisektionsmetoden.</p>
+                    </div>
             </div>
         ): (
                 <h1 className="flex justify-center items-center text-5xl font-semibold text-center">Indlæser data...</h1>

@@ -7,7 +7,6 @@ import {useRouter} from "next/navigation";
 // TODO: regex pattern til at lave latex om til plain text.
 // TODO: adde animationer
 // TODO: juster startværdi hvis f'(startværdi)=0
-// TODO: sammenlign newtons metode med fx bisektionsmetode i resultater
 const EditableMathField = dynamic(
     () =>
         import("react-mathquill").then((mod) => {
