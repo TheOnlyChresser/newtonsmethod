@@ -15,6 +15,7 @@ function Makepdf () {
     const [tolerance, setTolerance] = useState<number | null>(null);
     const [expression, setExpression] = useState<string | null>(null);
     const [calculationtime, setCalculationtime] = useState<number | null>(null);
+    const [alternativecalculationtime, setAlternativecalculationtime] = useState<number | null>(null);
     const loading = result && variable && iterations && startvalue && tolerance && expression && calculationtime && xarray?.length && yarray?.length && pointarray?.length;
 
 
@@ -39,6 +40,8 @@ function Makepdf () {
         setExpression(storedExpression);
         const storedCalculationtime = JSON.parse(localStorage.getItem("calculationtime") || "null");
         setCalculationtime(storedCalculationtime);
+        const storedAlternativeCalculationtime = JSON.parse(localStorage.getItem("alternativeCalculationtime") || "null");
+        setAlternativecalculationtime(storedAlternativeCalculationtime);
 
     }, []);
     return (
@@ -77,7 +80,8 @@ export default function Index() {
     const [tolerance, setTolerance] = useState<number | null>(null);
     const [expression, setExpression] = useState<string | null>(null);
     const [calculationtime, setCalculationtime] = useState<number | null>(null);
-    const loading = result && variable && iterations && startvalue && tolerance && expression && calculationtime && xarray?.length && yarray?.length && pointarray?.length;
+    const [alternativecalculationtime, setAlternativecalculationtime] = useState<number | null>(null);
+    const loading = result && variable && iterations && alternativecalculationtime && startvalue && tolerance && expression && calculationtime && xarray?.length && yarray?.length && pointarray?.length;
 
 
     useEffect(() => {
@@ -101,6 +105,8 @@ export default function Index() {
         setExpression(storedExpression);
         const storedCalculationtime = JSON.parse(localStorage.getItem("calculationtime") || "null");
         setCalculationtime(storedCalculationtime);
+        const storedAlternativeCalculationtime = JSON.parse(localStorage.getItem("alternativeCalculationtime") || "null");
+        setAlternativecalculationtime(storedAlternativeCalculationtime);
     }, []);
     return (
         <MathJaxContext>
@@ -147,6 +153,11 @@ export default function Index() {
                         <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">Tolerance: {tolerance}</h2>
                         <h3 className="italic font-extralight text-black text-sm mt-6 lg:text-[1vw] lg:mt-[6vh]">IT</h3>
                         <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">Beregningstid: {calculationtime} ms</h2>
+                        {(alternativecalculationtime-calculationtime)>0 ? (
+                        <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">{alternativecalculationtime-calculationtime} ms hurtigere end andre metoder<span className="mb-3">*</span></h2>
+                            ) : (
+                                <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">{calculationtime-alternativecalculationtime} ms langsommere end andre metoder<span className="mb-3">*</span></h2>
+                            )}
                     </div>
                     <div className="w-full flex items-center mt-16 lg:mt-[6vh]">
                         <Link href="/" className="text-black/50 hover:text-black mr-10 lg:hidden">

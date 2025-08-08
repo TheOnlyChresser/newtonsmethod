@@ -5,6 +5,9 @@ import {derivative, evaluate} from "mathjs";
 import dynamic from "next/dynamic";
 import {useRouter} from "next/navigation";
 // TODO: regex pattern til at lave latex om til plain text.
+// TODO: adde animationer
+// TODO: juster startværdi hvis f'(startværdi)=0
+// TODO: sammenlign newtons metode med fx bisektionsmetode i resultater
 const EditableMathField = dynamic(
     () =>
         import("react-mathquill").then((mod) => {
@@ -61,6 +64,24 @@ function functionarray(result: [number, number[]], expression: string | null, va
     return (
         [xarray, yarray, pointarray]
     )
+}
+
+function bisectionmethod(expression: string, variable: string, startValue: number = 100, tolerance: number = 0.000000000001) {
+    const start: number = Date.now();
+    let startInterval: number = startValue
+    let endInterval: number = startValue
+    let x: number = startValue
+    while (calculate(expression, variable, startInterval) > 0) {
+        startInterval = startInterval - 1
+    }
+    while (calculate(expression, variable, endInterval) < 0) {
+        endInterval = endInterval + 1
+    }
+    while (calculate(expression, variable, x) < tolerance) {
+        x = (startInterval+endInterval)/2
+    }
+    const calculationTime: number = Date.now()-start
+    return calculationTime
 }
 
 export default function Index() {
@@ -231,6 +252,7 @@ export default function Index() {
                                     localStorage.setItem("tolerance", JSON.stringify(truetolerance))
                                     localStorage.setItem("expression", JSON.stringify(latex))
                                     localStorage.setItem("calculationtime", JSON.stringify(newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[2]))
+                                    localStorage.setItem("alternativeCalculationtime", JSON.stringify(bisectionmethod(latex, x, truestartvalue, truetolerance)))
                                     router.push("/resultater")
                                 } else {
                                     alert("Ugyldige parametre.")
