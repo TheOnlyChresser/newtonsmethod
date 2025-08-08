@@ -113,7 +113,7 @@ export default function Index() {
             <main className="bg-blue-50 w-full min-h-[100vh] flex flex-col p-10 lg:px-40 lg:justify-center">
             {loading ? (
                 <div>
-            <MathJax className="text-4xl mb-16 lg:text-[3vw] lg:-mt-[4vh] lg:mb-[4vh] text-center lg:text-start">{`\\(f(${variable}) = ${expression}\\)`}</MathJax>
+            <MathJax className="text-4xl mb-16 lg:text-[3vw] lg:-mt-[2vh] lg:mb-[4vh] text-center lg:text-start">{`\\(f(${variable}) = ${expression}\\)`}</MathJax>
             <div className="flex lg:justify-center lg:items-center w-full lg:flex-row flex-col">
                 <div className="hidden lg:flex w-[50vw]">
                     <div className="w-[36vw] h-[36vw] p-2 border-2 rounded-md bg-blue-100/10 shadow-sm border-white">
@@ -177,7 +177,7 @@ export default function Index() {
 
                 </div>
             </div>
-                    <div className={ highlighted ? ("highlighted mt-10 font-bold"): ("mt-10")}>
+                    <div className={ highlighted ? ("highlighted mt-8 font-bold"): ("mt-8")}>
                         <p><span className="mb-3 ml-2 font-thin">*</span>Baseret på sammenligning med bisektionsmetoden.</p>
                     </div>
             </div>
