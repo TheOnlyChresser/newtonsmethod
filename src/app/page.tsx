@@ -7,7 +7,6 @@ import {useRouter} from "next/navigation";
 import {gsap} from "gsap/all"
 import {useGSAP} from "@gsap/react";
 // TODO: regex pattern til at lave latex om til plain text.
-// TODO: adde animationer
 // TODO: juster startværdi hvis f'(startværdi)=0
 const EditableMathField = dynamic(
     () =>
