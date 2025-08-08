@@ -498,3 +498,7 @@ body {
   filter: progid:DXImageTransform.Microsoft.Chroma(color='white');
   margin-top: -0.1em;
 }
+
+@utility highlighted {
+  @apply transition-all  scale-105;
+}

@@ -16,7 +16,7 @@ function Makepdf () {
     const [expression, setExpression] = useState<string | null>(null);
     const [calculationtime, setCalculationtime] = useState<number | null>(null);
     const [alternativecalculationtime, setAlternativecalculationtime] = useState<number | null>(null);
-    const loading = result && variable && iterations && startvalue && tolerance && expression && calculationtime && xarray?.length && yarray?.length && pointarray?.length;
+    const loading = result !== null && alternativecalculationtime !== null && variable !== null && iterations !== null && startvalue !== null && tolerance !== null && expression !== null && calculationtime !== null && xarray?.length && yarray?.length && pointarray?.length;
 
 
     useEffect(() => {
@@ -81,8 +81,8 @@ export default function Index() {
     const [expression, setExpression] = useState<string | null>(null);
     const [calculationtime, setCalculationtime] = useState<number | null>(null);
     const [alternativecalculationtime, setAlternativecalculationtime] = useState<number | null>(null);
-    const loading = result && variable && iterations && alternativecalculationtime && startvalue && tolerance && expression && calculationtime && xarray?.length && yarray?.length && pointarray?.length;
-
+    const loading = result && variable && iterations && alternativecalculationtime !==null && startvalue && tolerance && expression && calculationtime && xarray?.length && yarray?.length && pointarray?.length;
+    const [highlighted, setHighlighted] = useState<boolean>(false);
 
     useEffect(() => {
         const storedResult = JSON.parse(localStorage.getItem("newtonResult") || "null");
@@ -153,10 +153,16 @@ export default function Index() {
                         <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">Tolerance: {tolerance}</h2>
                         <h3 className="italic font-extralight text-black text-sm mt-6 lg:text-[1vw] lg:mt-[6vh]">IT</h3>
                         <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">Beregningstid: {calculationtime} ms</h2>
-                        {(alternativecalculationtime-calculationtime)>0 ? (
-                        <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">{alternativecalculationtime-calculationtime} ms hurtigere end andre metoder<span className="mb-3">*</span></h2>
+                        {(alternativecalculationtime-calculationtime)>=0 ? (
+                        <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">{alternativecalculationtime-calculationtime} ms hurtigere end andre metoder<span className="mb-3 text-black/50 cursor-pointer hover:text-black" onClick={() => {
+                            setHighlighted(true)
+                            setTimeout(() => setHighlighted(false), 1000)
+                        }}>*</span></h2>
                             ) : (
-                                <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">{calculationtime-alternativecalculationtime} ms langsommere end andre metoder<span className="mb-3">*</span></h2>
+                                <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">{calculationtime-alternativecalculationtime} ms langsommere end andre metoder<span className="mb-3 text-black/50 cursor-pointer hover:text-black" onClick={() => {
+                                    setHighlighted(true)
+                                    setTimeout(() => setHighlighted(false), 500)
+                                }}>*</span></h2>
                             )}
                     </div>
                     <div className="w-full flex items-center mt-16 lg:mt-[6vh]">
@@ -166,12 +172,12 @@ export default function Index() {
                         <Link href="/" className="text-black/50 hover:text-black mr-[4vh] hidden lg:block">
                             <svg xmlns="http://www.w3.org/2000/svg" height="3vw" viewBox="0 -960 960 960" width="3vw" fill="currentColor"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
                         </Link>
-                        <button className="border-2 border-black rounded-2xl text-3xl p-2 hover:bg-black hover:text-white lg:border-[0.15vw] lg:text-[2.4vw] lg:p-[0.5vw]" onClick={Makepdf}>Download rapport</button>
+                        <button className="border-2 border-black rounded-2xl text-3xl p-2 hover:bg-black hover:text-white lg:border-[0.15vw] lg:text-[2.4vw] lg:p-[0.75vw]" onClick={Makepdf}>Download rapport</button>
                     </div>
 
                 </div>
             </div>
-                    <div className="mt-10">
+                    <div className={ highlighted ? ("highlighted mt-10 font-bold"): ("mt-10")}>
                         <p><span className="mb-3 ml-2 font-thin">*</span>Baseret på sammenligning med bisektionsmetoden.</p>
                     </div>
             </div>

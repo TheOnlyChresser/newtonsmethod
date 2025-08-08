@@ -4,6 +4,8 @@ import {useEffect, useState} from "react";
 import {derivative, evaluate} from "mathjs";
 import dynamic from "next/dynamic";
 import {useRouter} from "next/navigation";
+import {gsap} from "gsap/all"
+import {useGSAP} from "@gsap/react";
 // TODO: regex pattern til at lave latex om til plain text.
 // TODO: adde animationer
 // TODO: juster startværdi hvis f'(startværdi)=0
@@ -95,20 +97,31 @@ export default function Index() {
     function updateStep(step: number) {
         setStep(Math.min(Math.max(step, 0), 3))
     }
+    useGSAP(
+        () => {
+            gsap.utils.toArray<HTMLElement>("h1").forEach(h1 => {
+                gsap.from(h1, {
+                    duration: 0.8,
+                    x: -25,
+                    opacity: 0,
+                    ease: "power2.out",
+                });
+            });
+            gsap.utils.toArray<HTMLElement>("input").forEach(input => {
+                gsap.from(input, {
+                    duration: 0.8,
+                    opacity: 0,
+                    ease: "power2.out",
+                });
+            });
+        }, {dependencies: [step]});
+
     useEffect(() => {
         const keyDownHandler = (event: { key: string; preventDefault: () => void; }) => {
 
             if (event.key === 'Enter') {
                 event.preventDefault();
                 updateStep(step+1)
-            }
-            else if (event.key === "ArrowRight") {
-                event.preventDefault();
-                updateStep(step+1)
-            }
-            else if (event.key === "ArrowLeft") {
-                event.preventDefault();
-                updateStep(step-1)
             }
         };
 
@@ -234,6 +247,12 @@ export default function Index() {
                                     />
                                 </div>
                             </div>
+                            <div className="w-full flex justify-between">
+                                <button className="cursor-pointer text-black hover:text-red-500 flex items-center mr-4"   onClick={() => {
+                                    setStep(step-1)
+                                }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#1f1f1f"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
+                                </button>
                             <button className="border-2 cursor-pointer hover:bg-black/85 border-black/85 hover:border-0 flex justify-center items-center h-[6vh] w-full rounded-3xl font-bold text-black/85 text-2xl hover:text-blue-50"   onClick={() => {
                                 const truestartvalue: number = Number(startvalue) || 100
                                 const trueiterations: number = Number(iterations) || 1000
@@ -261,6 +280,7 @@ export default function Index() {
                             }}>
                                 Udregn
                             </button>
+                            </div>
                         </>)}
                 </div>
             </main>
