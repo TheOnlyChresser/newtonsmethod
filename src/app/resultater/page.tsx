@@ -154,13 +154,13 @@ export default function Index() {
                         <h3 className="italic font-extralight text-black text-sm mt-6 lg:text-[1vw] lg:mt-[6vh]">IT</h3>
                         <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">Beregningstid: {calculationtime} ms</h2>
                         {(alternativecalculationtime-calculationtime)>=0 ? (
-                        <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">{alternativecalculationtime-calculationtime} ms hurtigere end andre metoder<span className="mb-3 text-black/50 cursor-default hover:text-yellow-300" onMouseEnter={() => {
+                        <h2 className="text-2xl lg:text-[2vw]">{alternativecalculationtime-calculationtime} ms hurtigere end andre metoder<span className="mb-3 text-black/50 cursor-default hover:text-yellow-300" onMouseEnter={() => {
                             setHighlighted(true)
                         }}onMouseLeave={() => {
                             setHighlighted(false)
                         }}>*</span></h2>
                             ) : (
-                                <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">{calculationtime-alternativecalculationtime} ms langsommere end andre metoder<span className="mb-3 text-black/50 cursor-default hover:text-yellow-300" onMouseEnter={() => {
+                                <h2 className="text-2xl lg:text-[2vw]">{calculationtime-alternativecalculationtime} ms langsommere end andre metoder<span className="mb-3 text-black/50 cursor-default hover:text-yellow-300" onMouseEnter={() => {
                                     setHighlighted(true)
                                 }}onMouseLeave={() => {
                                     setHighlighted(false)
