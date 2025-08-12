@@ -277,6 +277,19 @@ export default function Index() {
                                     alert("Ugyldige parametre.")
                                     setStep(0)
                                     console.log(Math.abs(calculate(latex, x, newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[0])))
+                                    const [a, b] = newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance);
+                                    const result: [number, number[]] = [a, b];
+                                    localStorage.setItem("newtonResult", JSON.stringify(result));
+                                    localStorage.setItem("newtonVariable", JSON.stringify(x));
+                                    localStorage.setItem("xarray", JSON.stringify(functionarray(result, latex, x)[0]))
+                                    localStorage.setItem("yarray", JSON.stringify(functionarray(result, latex, x)[1]))
+                                    localStorage.setItem("pointarray", JSON.stringify(functionarray(result, latex, x)[2]))
+                                    localStorage.setItem("iterations", JSON.stringify(trueiterations))
+                                    localStorage.setItem("startvalue", JSON.stringify(truestartvalue))
+                                    localStorage.setItem("tolerance", JSON.stringify(truetolerance))
+                                    localStorage.setItem("expression", JSON.stringify(latex))
+                                    localStorage.setItem("calculationtime", JSON.stringify(newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[2]))
+                                    localStorage.setItem("alternativeCalculationtime", JSON.stringify(bisectionmethod(latex, x, truestartvalue, truetolerance)))
                                 }
                             }}>
                                 Udregn
