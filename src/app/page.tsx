@@ -35,7 +35,7 @@ function newtonsmethod(expression: string, variable: string, startvalue: number 
         if (Math.abs(notderivative) < tolerance) {
             break
         }
-        if (derivative !== 0) {
+        if (derivative === 0) {
         x = x - notderivative/derivative}
         else {x+1}
     }
