@@ -35,7 +35,9 @@ function newtonsmethod(expression: string, variable: string, startvalue: number 
         if (Math.abs(notderivative) < tolerance) {
             break
         }
-        x = x - notderivative/derivative
+        if (derivative !== 0) {
+        x = x - notderivative/derivative}
+        else {x+1}
     }
     const end = Date.now();
     if(parseFloat(x.toFixed(3)) === Math.round(x)) {
