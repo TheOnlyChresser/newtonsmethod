@@ -31,7 +31,7 @@ function differentiate(expression:string, variable: string) : string {
     }
 }
 
-function newtonsmethod(expression: string, variable: string, startvalue: number = 100, iterations: number = 1000, tolerance: number = 0.000000000001): [number, number[], number] {
+function newtonsmethod(expression: string, variable: string, startvalue: number = 100, iterations: number = 1000, tolerance: number = 0.000000000001): [number, number[], number] | null {
     try {
     const start = Date.now();
     let x = startvalue
@@ -55,7 +55,7 @@ function newtonsmethod(expression: string, variable: string, startvalue: number 
     else return [parseFloat(x.toFixed(3)), xarray, end-start];} catch (err) {
         console.error(err);
         console.error("Fejl i newtons metode funktion. Fejl ligger i expression, variable, startvalue, iterations eller tolerance")
-        return [0, [0, 0, 0, 0, 0], 0]
+        return null
     }
 }
 
@@ -284,6 +284,8 @@ export default function Index() {
                                 const trueiterations: number = Number(iterations) || 1000
                                 const truetolerance: number = Number(tolerance) || 0.000000000001
                                 try {
+                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                    // @ts-expect-error
                                     const [a, b] = newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance);
                                     const result: [number, number[]] = [a, b];
                                     localStorage.setItem("newtonResult", JSON.stringify(result));
@@ -295,6 +297,8 @@ export default function Index() {
                                     localStorage.setItem("startvalue", JSON.stringify(truestartvalue))
                                     localStorage.setItem("tolerance", JSON.stringify(truetolerance))
                                     localStorage.setItem("expression", JSON.stringify(latex))
+                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                    // @ts-expect-error
                                     localStorage.setItem("calculationtime", JSON.stringify(newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[2]))
                                     localStorage.setItem("alternativeCalculationtime", JSON.stringify(bisectionmethod(latex, x, truestartvalue, truetolerance)))
                                     router.push("/resultater")
@@ -312,9 +316,13 @@ export default function Index() {
                                     console.error(`xarray: ${functionarray(result, latex, x)[0]}`)
                                     console.error(`yarray: ${functionarray(result, latex, x)[1]}`)
                                     console.error(`pointarray: ${functionarray(result, latex, x)[2]}`)
+                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                    // @ts-expect-error
                                     console.error(`Calculationtime: ${newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[2]}`)
                                     console.error(`Alternativecalculationtime: ${bisectionmethod(latex, x, truestartvalue, truetolerance)}`)
                                     setStep(0)
+                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                    // @ts-expect-error
                                     console.log(Math.abs(calculate(latex, x, newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[0])))
                                 }
                             }}>
