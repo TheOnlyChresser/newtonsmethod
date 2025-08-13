@@ -17,13 +17,22 @@ const EditableMathField = dynamic(
 );
 
 function calculate(expression : string, variable: string, x: number): number {
-    return evaluate(expression, {[variable]: x})
+    try{return evaluate(expression, {[variable]: x})} catch (err) {
+        console.error(err);
+        console.error("Fejl i udregning af funktion. Fejl ligger i x, expression eller variable.")
+        return 0
+    }
 }
 function differentiate(expression:string, variable: string) : string {
-    return derivative(expression, variable).toString();
+    try{return derivative(expression, variable).toString();} catch (err) {
+        console.error(err);
+        console.error("Fejl i differentierings funktionen. Fejl ligger i expression eller variable.");
+        return `${err}`
+    }
 }
 
 function newtonsmethod(expression: string, variable: string, startvalue: number = 100, iterations: number = 1000, tolerance: number = 0.000000000001): [number, number[], number] {
+    try {
     const start = Date.now();
     let x = startvalue
     const xarray: number[] = [];
@@ -43,10 +52,15 @@ function newtonsmethod(expression: string, variable: string, startvalue: number 
     if(parseFloat(x.toFixed(3)) === Math.round(x)) {
         return [Math.round(x), xarray, end-start];
     }
-    else return [parseFloat(x.toFixed(3)), xarray, end-start];
+    else return [parseFloat(x.toFixed(3)), xarray, end-start];} catch (err) {
+        console.error(err);
+        console.error("Fejl i newtons metode funktion. Fejl ligger i expression, variable, startvalue, iterations eller tolerance")
+        return [0, [0, 0, 0, 0, 0], 0]
+    }
 }
 
-function functionarray(result: [number, number[]], expression: string | null, variable: string | null) {
+function functionarray(result: [number, number[]], expression: string | null, variable: string | null): [number[], number[], (number | null)[]] {
+    try {
     const xarray = [];
     const yarray = [];
     const pointarray = [];
@@ -65,10 +79,16 @@ function functionarray(result: [number, number[]], expression: string | null, va
     }
     return (
         [xarray, yarray, pointarray]
-    )
+    )}
+    catch (err) {
+        console.error(err);
+        console.error("Fejl i udregningen af funktionens x og y værdier. Fejl ligger i result, expression eller variable.")
+        return [[0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0]]
+    }
 }
 
 function bisectionmethod(expression: string, variable: string, startValue: number = 100, tolerance: number = 0.000000000001) {
+    try {
     const start: number = Date.now();
     let startInterval: number = startValue
     let endInterval: number = startValue
@@ -83,7 +103,12 @@ function bisectionmethod(expression: string, variable: string, startValue: numbe
         x = (startInterval+endInterval)/2
     }
     const calculationTime: number = Date.now()-start
-    return calculationTime
+    return calculationTime}
+    catch (err) {
+        console.error(err);
+        console.error("Fejl ligger i bisektionsmetodens funktion. Fejl ligger i expression, variable, startvalue eller tolerance.")
+        return 0
+    }
 }
 
 export default function Index() {
@@ -258,7 +283,7 @@ export default function Index() {
                                 const truestartvalue: number = Number(startvalue) || 100
                                 const trueiterations: number = Number(iterations) || 1000
                                 const truetolerance: number = Number(tolerance) || 0.000000000001
-                                if (Math.abs(calculate(latex, x, newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[0])) < 5) {
+                                try {
                                     const [a, b] = newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance);
                                     const result: [number, number[]] = [a, b];
                                     localStorage.setItem("newtonResult", JSON.stringify(result));
@@ -273,23 +298,24 @@ export default function Index() {
                                     localStorage.setItem("calculationtime", JSON.stringify(newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[2]))
                                     localStorage.setItem("alternativeCalculationtime", JSON.stringify(bisectionmethod(latex, x, truestartvalue, truetolerance)))
                                     router.push("/resultater")
-                                } else {
-                                    alert("Ugyldige parametre.")
-                                    setStep(0)
-                                    console.log(Math.abs(calculate(latex, x, newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[0])))
+                                } catch (err) {
                                     const [a, b] = newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance);
                                     const result: [number, number[]] = [a, b];
-                                    localStorage.setItem("newtonResult", JSON.stringify(result));
-                                    localStorage.setItem("newtonVariable", JSON.stringify(x));
-                                    localStorage.setItem("xarray", JSON.stringify(functionarray(result, latex, x)[0]))
-                                    localStorage.setItem("yarray", JSON.stringify(functionarray(result, latex, x)[1]))
-                                    localStorage.setItem("pointarray", JSON.stringify(functionarray(result, latex, x)[2]))
-                                    localStorage.setItem("iterations", JSON.stringify(trueiterations))
-                                    localStorage.setItem("startvalue", JSON.stringify(truestartvalue))
-                                    localStorage.setItem("tolerance", JSON.stringify(truetolerance))
-                                    localStorage.setItem("expression", JSON.stringify(latex))
-                                    localStorage.setItem("calculationtime", JSON.stringify(newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[2]))
-                                    localStorage.setItem("alternativeCalculationtime", JSON.stringify(bisectionmethod(latex, x, truestartvalue, truetolerance)))
+                                    alert("Ugyldige parametre.")
+                                    console.error(err)
+                                    console.error(`Result: ${result}`)
+                                    console.error(`Iterations: ${trueiterations}`)
+                                    console.error(`Startvalue: ${truestartvalue}`)
+                                    console.error(`Tolerance: ${truetolerance}`)
+                                    console.error(`Variable: ${x}`)
+                                    console.error(`Expression: ${latex}`)
+                                    console.error(`xarray: ${functionarray(result, latex, x)[0]}`)
+                                    console.error(`yarray: ${functionarray(result, latex, x)[1]}`)
+                                    console.error(`pointarray: ${functionarray(result, latex, x)[2]}`)
+                                    console.error(`Calculationtime: ${newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[2]}`)
+                                    console.error(`Alternativecalculationtime: ${bisectionmethod(latex, x, truestartvalue, truetolerance)}`)
+                                    setStep(0)
+                                    console.log(Math.abs(calculate(latex, x, newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[0])))
                                 }
                             }}>
                                 Udregn
