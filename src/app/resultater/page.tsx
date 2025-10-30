@@ -70,43 +70,58 @@ function Makepdf () {
     )
 }
 export default function Index() {
-    const [result, setResult] = useState<[number, number[]] | null>(null);
-    const [variable, setVariable] = useState<string | null>(null);
-    const [xarray, setXarray] = useState<number[] | null>(null);
-    const [yarray, setYarray] = useState<number[] | null>(null);
-    const [pointarray, setPointarray] = useState<number[] | null>(null);
-    const [iterations, setIterations] = useState<number | null>(null);
-    const [startvalue, setStartvalue] = useState<number | null>(null);
-    const [tolerance, setTolerance] = useState<number | null>(null);
-    const [expression, setExpression] = useState<string | null>(null);
-    const [calculationtime, setCalculationtime] = useState<number | null>(null);
-    const [alternativecalculationtime, setAlternativecalculationtime] = useState<number | null>(null);
-    const loading = result && variable && iterations && alternativecalculationtime !==null && startvalue && tolerance && expression && calculationtime && xarray?.length && yarray?.length && pointarray?.length;
+    const [result, setResult] = useState<[number, number[]]>([0, [0]]);
+    const [variable, setVariable] = useState<string>("");
+    const [xarray, setXarray] = useState<number[]>([0]);
+    const [yarray, setYarray] = useState<number[]>([0]);
+    const [pointarray, setPointarray] = useState<number[]>([0]);
+    const [iterations, setIterations] = useState<number>(0);
+    const [startvalue, setStartvalue] = useState<number>(0);
+    const [tolerance, setTolerance] = useState<number>(0);
+    const [expression, setExpression] = useState<string>("");
+    const [calculationtime, setCalculationtime] = useState<number>(0);
+    const [alternativecalculationtime, setAlternativecalculationtime] = useState<number>(0);
+    const loading = true
     const [highlighted, setHighlighted] = useState<boolean>(false);
+    const [onotation, setOnotation] = useState<string>("");
 
     useEffect(() => {
         const storedResult = JSON.parse(localStorage.getItem("newtonResult") || "null");
+        console.log(JSON.parse(localStorage.getItem("newtonResult") || "null"));
         setResult(storedResult);
         const storedVariable = JSON.parse(localStorage.getItem("newtonVariable") || "null");
+        console.log(JSON.parse(localStorage.getItem("newtonVariable") || "null"));
         setVariable(storedVariable);
         const storedXarray = JSON.parse(localStorage.getItem("xarray") || "null");
+        console.log(JSON.parse(localStorage.getItem("xarray") || "null"));
         setXarray(storedXarray);
         const storedYarray = JSON.parse(localStorage.getItem("yarray") || "null");
+        console.log(JSON.parse(localStorage.getItem("yarray") || "null"));
         setYarray(storedYarray);
         const storedPointarray = JSON.parse(localStorage.getItem("pointarray") || "null");
+        console.log(JSON.parse(localStorage.getItem("pointarray") || "null"));
         setPointarray(storedPointarray);
         const storedIterations = JSON.parse(localStorage.getItem("iterations") || "null");
+        console.log(JSON.parse(localStorage.getItem("iterations") || "null"));
         setIterations(storedIterations);
         const storedStartvalue = JSON.parse(localStorage.getItem("startvalue") || "null");
+        console.log(JSON.parse(localStorage.getItem("startvalue") || "null"));
         setStartvalue(storedStartvalue);
         const storedTolerance = JSON.parse(localStorage.getItem("tolerance") || "null");
+        console.log(JSON.parse(localStorage.getItem("tolerance") || "null"));
         setTolerance(storedTolerance);
         const storedExpression = JSON.parse(localStorage.getItem("expression") || "null");
+        console.log(JSON.parse(localStorage.getItem("expression") || "null"));
         setExpression(storedExpression);
         const storedCalculationtime = JSON.parse(localStorage.getItem("calculationtime") || "null");
+        console.log(JSON.parse(localStorage.getItem("calculationtime") || "null"));
         setCalculationtime(storedCalculationtime);
         const storedAlternativeCalculationtime = JSON.parse(localStorage.getItem("alternativeCalculationtime") || "null");
+        console.log(JSON.parse(localStorage.getItem("alternativeCalculationtime") || "null"));
         setAlternativecalculationtime(storedAlternativeCalculationtime);
+        const storedOnotation = JSON.parse(localStorage.getItem("onotation") ||"null")
+        console.log(JSON.parse(localStorage.getItem("onotation") || "null"));
+        setOnotation(storedOnotation);
     }, []);
     return (
         <MathJaxContext>
@@ -144,13 +159,14 @@ export default function Index() {
                     />
                 </div>
                 <div className="lg:w-[50vw] lg:ml-[2vw]">
-                    <h3 className="italic font-light text-gray-900 text-sm lg:text-[0.8vw]">Nulpunkt</h3>
-                    <h2 className="text-2xl lg:text-[1.6vw]">Fundet nulpunkt: {result[0]}</h2>
+                    <h3 className="italic font-light text-gray-900 text-sm lg:text-[0.8vw] mb-2">Nulpunkt</h3>
+                    <h2 className="text-2xl lg:text-[1.6vw]">Fundet nulpunkt: ({result[0]}; 0)</h2>
                     <div className="mt-16 lg:mt-[6vh] space-y-2">
                         <h3 className="italic font-light text-gray-900 text-sm lg:text-[0.8vw]">Yderligere info</h3>
                         <h2 className="text-xl mb-1 lg:text-[1.6vw]">Startværdi: {startvalue}</h2>
                         <h2 className="text-xl mb-1 lg:text-[1.6vw]">Antal iterationer: {iterations}</h2>
                         <h2 className="text-xl mb-1 lg:text-[1.6vw]">Tolerance: {tolerance}</h2>
+                        <h2 className="text-xl mb-1 lg:text-[1.6vw]">Beregnet O-notation: {onotation}</h2>
                         <h3 className="italic font-light text-gray-900 text-sm mt-6 lg:text-[0.8vw] lg:mt-[6vh]">IT</h3>
                         <h2 className="text-xl mb-1 lg:text-[1.6vw]">Beregningstid: {calculationtime} ms</h2>
                         {(alternativecalculationtime-calculationtime)>=0 ? (
@@ -179,7 +195,7 @@ export default function Index() {
 
                 </div>
             </div>
-                    <div className="mt-8">
+                    <div className="mt-4">
                         <p className="lg:text-[1.2vw]"><span className={ highlighted ? ("mb-3 ml-2 text-yellow-500 font-thin"): ("mb-3 ml-2 font-thin")}>*</span>Baseret på sammenligning med bisektionsmetoden.</p>
                     </div>
             </div>

@@ -28,9 +28,26 @@ function calculate(expression : string, variable: string, x: number): number {
     }
 }
 
-function newtonsmethod(expression: string, variable: string, startvalue: number = 100, iterations: number = 1000, tolerance: number = 0.000000000001): [number, number[], number] | null {
+function convergenceOrder(xarray: number[]): number {
+    if (xarray.length < 3) return 0;
+
+    const n = xarray.length - 1;
+    const dx = Math.abs(xarray[n] - xarray[n - 1]);
+    const dx0 = Math.abs(xarray[n - 1] - xarray[n - 2]);
+
+    if (dx === 0 || dx0 === 0) return 0;
+
+    return Math.log(dx / dx0) / Math.log(dx0 / Math.abs(xarray[n - 2] - xarray[n - 3] || dx0));
+}
+
+
+function newtonsmethod(expression: string, variable: string, startvalue: number = 100, iterations: number = 1000, tolerance: number = 0.000000000001): [number, number[], number, number] | null {
     try {
-    latex2text(expression)
+    expression = latex2text(expression)
+    if (calculate(expression, variable, startvalue) > 0 && calculate(expression, variable, -startvalue) > 0) {
+        console.warn("No real root exists for this function");
+        return [parseFloat(startvalue.toFixed(3)), [startvalue], 0, convergenceOrder([startvalue])];
+    }
     const start = Date.now();
     let x = startvalue
     const xarray: number[] = [];
@@ -43,13 +60,13 @@ function newtonsmethod(expression: string, variable: string, startvalue: number 
         }
         if (derivative !== 0 || notderivative !== 0) {
         x = x - notderivative/derivative}
-        else {x+1}
+        else {x= x+1}
     }
     const end = Date.now();
     if(parseFloat(x.toFixed(3)) === Math.round(x)) {
-        return [Math.round(x), xarray, end-start];
+        return [Math.round(x), xarray, end-start, convergenceOrder(xarray)];
     }
-    else return [parseFloat(x.toFixed(3)), xarray, end-start];} catch (err) {
+    else return [parseFloat(x.toFixed(3)), xarray, end-start, convergenceOrder(xarray)];} catch (err) {
         console.error(err);
         console.error("Fejl i newtons metode funktion. Fejl ligger i expression, variable, startvalue, iterations eller tolerance")
         return null
@@ -86,7 +103,7 @@ function functionarray(result: [number, number[]], expression: string | null, va
 
 function bisectionmethod(expression: string, variable: string, startValue: number = 100, tolerance: number = 0.000000000001) {
     try {
-    latex2text(expression)
+    expression = latex2text(expression)
     const start: number = Date.now();
     let startInterval: number = startValue
     let endInterval: number = startValue
@@ -299,6 +316,9 @@ export default function Index() {
                                     // @ts-expect-error
                                     localStorage.setItem("calculationtime", JSON.stringify(newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[2]))
                                     localStorage.setItem("alternativeCalculationtime", JSON.stringify(bisectionmethod(latex, x, truestartvalue, truetolerance)))
+                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                    // @ts-expect-error
+                                    localStorage.setItem("onotation", JSON.stringify(Math.round(newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[3]*1000)/1000))
                                     router.push("/resultater")
                                 } catch (err) {
                                     const [a, b] = newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance);
