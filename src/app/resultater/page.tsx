@@ -166,7 +166,7 @@ export default function Index() {
                         <h2 className="text-xl mb-1 lg:text-[1.6vw]">Startværdi: {startvalue}</h2>
                         <h2 className="text-xl mb-1 lg:text-[1.6vw]">Antal iterationer: {iterations}</h2>
                         <h2 className="text-xl mb-1 lg:text-[1.6vw]">Tolerance: {tolerance}</h2>
-                        <h2 className="text-xl mb-1 lg:text-[1.6vw]">Beregnet O-notation: {onotation}</h2>
+                        <h2 className="text-xl mb-1 lg:text-[1.6vw]">Beregnet konvergens: {onotation}</h2>
                         <h3 className="italic font-light text-gray-900 text-sm mt-6 lg:text-[0.8vw] lg:mt-[6vh]">IT</h3>
                         <h2 className="text-xl mb-1 lg:text-[1.6vw]">Beregningstid: {calculationtime} ms</h2>
                         {(alternativecalculationtime-calculationtime)>=0 ? (
