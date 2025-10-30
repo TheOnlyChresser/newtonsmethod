@@ -144,43 +144,43 @@ export default function Index() {
                     />
                 </div>
                 <div className="lg:w-[50vw] lg:ml-[2vw]">
-                    <h3 className="italic font-extralight text-black text-sm lg:text-[1vw]">Nulpunkt</h3>
-                    <h2 className="text-2xl lg:text-[2vw]">Fundet nulpunkt: {result[0]}</h2>
-                    <div className="mt-16 lg:mt-[6vh]">
-                        <h3 className="italic font-extralight text-black text-sm lg:text-[1vw]">Yderligere info</h3>
-                        <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">Startværdi: {startvalue}</h2>
-                        <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">Antal iterationer: {iterations}</h2>
-                        <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">Tolerance: {tolerance}</h2>
-                        <h3 className="italic font-extralight text-black text-sm mt-6 lg:text-[1vw] lg:mt-[6vh]">IT</h3>
-                        <h2 className="text-2xl mb-1 lg:text-[2vw] lg:mb-[0.25vh]">Beregningstid: {calculationtime} ms</h2>
+                    <h3 className="italic font-light text-gray-900 text-sm lg:text-[0.8vw]">Nulpunkt</h3>
+                    <h2 className="text-2xl lg:text-[1.6vw]">Fundet nulpunkt: {result[0]}</h2>
+                    <div className="mt-16 lg:mt-[6vh] space-y-2">
+                        <h3 className="italic font-light text-gray-900 text-sm lg:text-[0.8vw]">Yderligere info</h3>
+                        <h2 className="text-xl mb-1 lg:text-[1.6vw]">Startværdi: {startvalue}</h2>
+                        <h2 className="text-xl mb-1 lg:text-[1.6vw]">Antal iterationer: {iterations}</h2>
+                        <h2 className="text-xl mb-1 lg:text-[1.6vw]">Tolerance: {tolerance}</h2>
+                        <h3 className="italic font-light text-gray-900 text-sm mt-6 lg:text-[0.8vw] lg:mt-[6vh]">IT</h3>
+                        <h2 className="text-xl mb-1 lg:text-[1.6vw]">Beregningstid: {calculationtime} ms</h2>
                         {(alternativecalculationtime-calculationtime)>=0 ? (
-                        <h2 className="text-2xl lg:text-[2vw]">{alternativecalculationtime-calculationtime} ms hurtigere end andre metoder<span className="mb-3 text-black/50 cursor-default hover:text-yellow-300" onMouseEnter={() => {
+                        <h2 className="text-xl lg:text-[1.6vw]"><span className="text-green-600 font-medium">{alternativecalculationtime-calculationtime} ms</span> hurtigere end andre metoder<span className="mb-3 text-gray-400 cursor-default hover:text-yellow-300" onMouseEnter={() => {
                             setHighlighted(true)
                         }}onMouseLeave={() => {
                             setHighlighted(false)
                         }}>*</span></h2>
                             ) : (
-                                <h2 className="text-2xl lg:text-[2vw]">{calculationtime-alternativecalculationtime} ms langsommere end andre metoder<span className="mb-3 text-black/50 cursor-default hover:text-yellow-300" onMouseEnter={() => {
+                                <h2 className="text-xl lg:text-[1.6vw]"><span className="text-red-600 font-medium">{calculationtime-alternativecalculationtime} ms</span> langsommere end andre metoder<span className="mb-3 text-gray-400 cursor-default hover:text-yellow-300" onMouseEnter={() => {
                                     setHighlighted(true)
                                 }}onMouseLeave={() => {
                                     setHighlighted(false)
                                 }}>*</span></h2>
                             )}
                     </div>
-                    <div className="w-full flex items-center mt-16 lg:mt-[6vh]">
-                        <Link href="/" className="text-black/50 hover:text-black mr-10 lg:hidden">
+                    <div className="flex items-center gap-6 mt-12 lg:mt-[6vh]">
+                        <Link href="/" className="text-gray-400 hover:text-gray-900 mr-10 lg:hidden">
                             <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="currentColor"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
                         </Link>
-                        <Link href="/" className="text-black/50 hover:text-black mr-[4vh] hidden lg:block">
+                        <Link href="/" className="text-gray-400 hover:text-gray-900 mr-[4vh] hidden lg:block">
                             <svg xmlns="http://www.w3.org/2000/svg" height="3vw" viewBox="0 -960 960 960" width="3vw" fill="currentColor"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
                         </Link>
-                        <button className="border-2 border-black rounded-2xl text-3xl p-2 hover:bg-black hover:text-white lg:border-[0.15vw] lg:text-[2.4vw] lg:p-[0.75vw]" onClick={Makepdf}>Download rapport</button>
+                        <button className="cursor-pointer border-2 border-black rounded-2xl text-3xl p-2 hover:bg-gray-900 hover:text-white lg:border-[0.15vw] lg:text-[2.4vw] lg:py-[0.8vw] lg:px-[1.6vw] transition-all duration-200 shadow-sm hover:shadow-md" onClick={Makepdf}>Download rapport</button>
                     </div>
 
                 </div>
             </div>
                     <div className="mt-8">
-                        <p><span className={ highlighted ? ("mb-3 ml-2 text-yellow-500 font-thin"): ("mb-3 ml-2 font-thin")}>*</span>Baseret på sammenligning med bisektionsmetoden.</p>
+                        <p className="lg:text-[1.2vw]"><span className={ highlighted ? ("mb-3 ml-2 text-yellow-500 font-thin"): ("mb-3 ml-2 font-thin")}>*</span>Baseret på sammenligning med bisektionsmetoden.</p>
                     </div>
             </div>
         ): (
