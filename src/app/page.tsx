@@ -318,7 +318,7 @@ export default function Index() {
                                     localStorage.setItem("alternativeCalculationtime", JSON.stringify(bisectionmethod(latex, x, truestartvalue, truetolerance)))
                                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                     // @ts-expect-error
-                                    localStorage.setItem("onotation", JSON.stringify(Math.round(newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[3]*1000)/1000))
+                                    localStorage.setItem("convergence", JSON.stringify(Math.round(newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance)[3]*1000)/1000))
                                     router.push("/resultater")
                                 } catch (err) {
                                     const [a, b] = newtonsmethod(latex, x, truestartvalue, trueiterations, truetolerance);

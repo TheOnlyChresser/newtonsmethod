@@ -83,7 +83,7 @@ export default function Index() {
     const [alternativecalculationtime, setAlternativecalculationtime] = useState<number>(0);
     const loading = true
     const [highlighted, setHighlighted] = useState<boolean>(false);
-    const [onotation, setOnotation] = useState<string>("");
+    const [convergence, setConvergence] = useState<string>("");
 
     useEffect(() => {
         const storedResult = JSON.parse(localStorage.getItem("newtonResult") || "null");
@@ -119,9 +119,9 @@ export default function Index() {
         const storedAlternativeCalculationtime = JSON.parse(localStorage.getItem("alternativeCalculationtime") || "null");
         console.log(JSON.parse(localStorage.getItem("alternativeCalculationtime") || "null"));
         setAlternativecalculationtime(storedAlternativeCalculationtime);
-        const storedOnotation = JSON.parse(localStorage.getItem("onotation") ||"null")
-        console.log(JSON.parse(localStorage.getItem("onotation") || "null"));
-        setOnotation(storedOnotation);
+        const storedConvergence = JSON.parse(localStorage.getItem("convergence") ||"null")
+        console.log(JSON.parse(localStorage.getItem("convergence") || "null"));
+        setConvergence(storedConvergence);
     }, []);
     return (
         <MathJaxContext>
@@ -166,7 +166,7 @@ export default function Index() {
                         <h2 className="text-xl mb-1 lg:text-[1.6vw]">Startværdi: {startvalue}</h2>
                         <h2 className="text-xl mb-1 lg:text-[1.6vw]">Antal iterationer: {iterations}</h2>
                         <h2 className="text-xl mb-1 lg:text-[1.6vw]">Tolerance: {tolerance}</h2>
-                        <h2 className="text-xl mb-1 lg:text-[1.6vw]">Beregnet konvergens: {onotation}</h2>
+                        <h2 className="text-xl mb-1 lg:text-[1.6vw]">Beregnet konvergens: {convergence}</h2>
                         <h3 className="italic font-light text-gray-900 text-sm mt-6 lg:text-[0.8vw] lg:mt-[6vh]">IT</h3>
                         <h2 className="text-xl mb-1 lg:text-[1.6vw]">Beregningstid: {calculationtime} ms</h2>
                         {(alternativecalculationtime-calculationtime)>=0 ? (
