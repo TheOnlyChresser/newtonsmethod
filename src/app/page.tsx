@@ -16,6 +16,10 @@ const EditableMathField = dynamic(
     { ssr: false }
 );
 
+function latex2text(latex: string): string {
+    return latex.replace(/\^\{([^}]*)}/g, "^($1)")
+}
+
 function calculate(expression : string, variable: string, x: number): number {
     try{return evaluate(expression, {[variable]: x})} catch (err) {
         console.error(err);
@@ -26,6 +30,7 @@ function calculate(expression : string, variable: string, x: number): number {
 
 function newtonsmethod(expression: string, variable: string, startvalue: number = 100, iterations: number = 1000, tolerance: number = 0.000000000001): [number, number[], number] | null {
     try {
+    latex2text(expression)
     const start = Date.now();
     let x = startvalue
     const xarray: number[] = [];
@@ -81,6 +86,7 @@ function functionarray(result: [number, number[]], expression: string | null, va
 
 function bisectionmethod(expression: string, variable: string, startValue: number = 100, tolerance: number = 0.000000000001) {
     try {
+    latex2text(expression)
     const start: number = Date.now();
     let startInterval: number = startValue
     let endInterval: number = startValue
