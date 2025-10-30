@@ -23,24 +23,16 @@ function calculate(expression : string, variable: string, x: number): number {
         return 0
     }
 }
-function differentiate(expression:string, variable: string) : string {
-    try{return derivative(expression, variable).toString();} catch (err) {
-        console.error(err);
-        console.error("Fejl i differentierings funktionen. Fejl ligger i expression eller variable.");
-        return `${err}`
-    }
-}
 
 function newtonsmethod(expression: string, variable: string, startvalue: number = 100, iterations: number = 1000, tolerance: number = 0.000000000001): [number, number[], number] | null {
     try {
     const start = Date.now();
     let x = startvalue
     const xarray: number[] = [];
-    const derivativeexpression = differentiate(expression, variable)
     for (let i = 0; i < iterations; i++) {
         xarray.push(x);
         const notderivative = calculate(expression, variable, x)
-        const derivative = calculate(derivativeexpression, variable, x)
+        const derivative = (calculate(expression, variable, x+tolerance)-calculate(expression, variable, x))/tolerance
         if (Math.abs(notderivative) < tolerance) {
             break
         }
